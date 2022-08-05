@@ -42,7 +42,7 @@ blueprint:
       description: Actions when starting threshhold is crossed
       selector:
         action: {}
-    source_url: https://raw.githubusercontent.com/chriscolden/homeassistant/main/blueprints/appliance_start_stop_vibration.yaml
+    source_url: https://github.com/chriscolden/homeassistant/blob/7670b7ea297d0638543c4bfcbde6b9340a0e6bb0/blueprints/appliance_start_stop_vibration.yaml
 trigger:
 - platform: state
   entity_id: !input 'vibration_sensor'
