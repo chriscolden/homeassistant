@@ -82,7 +82,7 @@ blueprint:
 
     awtrix_position:
       name: Position
-      description: Position in the Awtrix cycle
+      description: Position in the Awtrix cycle (Custom App Only)
       default: 0
       selector:
         number:
@@ -184,8 +184,7 @@ sequence:
                       "icon": "{{awtrix_icon}}",
                       "pushIcon": {{awtrix_push_icon}},
                       "repeat":  {{awtrix_repeat}},
-                      "duration": {{awtrix_duration}},
-                      "pos": {{awtrix_pos}}
+                      "duration": {{awtrix_duration}}
                     }
           - conditions:
             - condition: template
