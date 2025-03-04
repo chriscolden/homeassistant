@@ -18,6 +18,7 @@ blueprint:
       name: Awtrix Application name
       description: >-
         This is the app name listed in the MQTT topic - it should be unique
+      default: ""
       selector:
         text:
 
@@ -120,6 +121,7 @@ blueprint:
     awtrix_icon:
       name: icon
       description: Icon Name
+      default: ""
       selector:
         template: 
 
