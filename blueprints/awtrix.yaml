@@ -92,10 +92,10 @@ blueprint:
     awtrix_repeat:
       name: Repeat
       description: Sets how many times the text should be scrolled through the matrix before the app ends.	
-      default: 1
+      default: -1
       selector:
         number:
-          min: 1
+          min: -1
           max: 100
 
     awtrix_text_offset:
@@ -109,8 +109,8 @@ blueprint:
     
     awtrix_duration:
       name: Duration (in seconds)
-      description: Sets how long the app should be displayed. 0 is global app time.
-      default: "0"
+      description: Sets how long the app should be displayed. (Default 5)
+      default: "5"
     
     awtrix_text:
       name: Text
