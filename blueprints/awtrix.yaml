@@ -18,7 +18,6 @@ blueprint:
       name: Awtrix Application name
       description: >-
         This is the app name listed in the MQTT topic - it should be unique
-      default: "mycustomapp"
       selector:
         text:
 
