@@ -139,10 +139,10 @@ variables:
   awtrix_appname: !input awtrix_appname
   awtrix_retain_input: !input awtrix_retain
   awtrix_retain: >
-    {{ (retain_input | string).lower() }}
+    {{ (awtrix_retain_input | string).lower() }}
   awtrix_rainbow_input: !input awtrix_rainbow
   awtrix_rainbow: >
-    {{ (rainbow_input | string).lower() }}
+    {{ (awtrix_rainbow_input | string).lower() }}
   awtrix_push_icon: !input awtrix_push_icon
   awtrix_icon: !input awtrix_icon
   awtrix_text_case: !input awtrix_text_case
@@ -153,10 +153,10 @@ variables:
   awtrix_text_offset: !input awtrix_text_offset
   awtrix_text_color_input: !input awtrix_text_color
   awtrix_text_color: >
-    {{ "#%02x%02x%02x" | format(text_color_input[0], text_color_input[1], text_color_input[2]) }}
+    {{ "#%02x%02x%02x" | format(awtrix_text_color_input[0], awtrix_text_color_input[1], awtrix_text_color_input[2]) }}
   awtrix_background_color_input: !input awtrix_background_color
   awtrix_background_color: >
-    {{ "#%02x%02x%02x" | format(background_color_input[0], background_color_input[1], background_color_input[2]) }}
+    {{ "#%02x%02x%02x" | format(awtrix_background_color_input[0], awtrix_background_color_input[1], awtrix_background_color_input[2]) }}
 
 sequence:
   - repeat:
