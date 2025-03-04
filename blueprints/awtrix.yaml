@@ -4,7 +4,7 @@ blueprint:
   author: Chris Colden
   domain: script
   input:
-    awtrix:
+    awtrix_device:
       name: AWTRIX Device
       description: Select the AWTRIX 3
       selector:
@@ -14,7 +14,7 @@ blueprint:
           model: AWTRIX 3
           multiple: true
           
-    appname:
+    awtrix_appname:
       name: Awtrix Application name
       description: >-
         This is the app name listed in the MQTT topic - it should be unique
@@ -22,35 +22,35 @@ blueprint:
       selector:
         text:
 
-    retain:
+    awtrix_retain:
       name: MQTT Retain
       description: MQTT Retain, be cerful!
       selector:
         boolean:
       default: false
 
-    text_color:
+    awtrix_text_color:
       name: Text Color
       description: Select the Text Color
       selector:
         color_rgb:
       default: [255, 255, 255]
 
-    background_color:
+    awtrix_background_color:
       name: Background Color
       description: Sets a background color
       selector:
         color_rgb:
       default: [0, 0, 0]
 
-    rainbow:
+    awtrix_rainbow:
       name: Rainbow Effect
       description: Fades each letter in the text differently through the entire RGB spectrum.
       selector:
         boolean:
       default: false
 
-    push_icon:
+    awtrix_push_icon:
       name: Push Icon
       description: Icon behavior
       selector:
@@ -65,7 +65,7 @@ blueprint:
           mode: dropdown
       default: "0"
 
-    text_case:
+    awtrix_text_case:
       name: Text Case
       description: Text Case
       selector:
@@ -80,7 +80,7 @@ blueprint:
           mode: dropdown
       default: "0"
 
-    position:
+    awtrix_position:
       name: Position
       description: Position in the Awtrix cycle
       default: 0
@@ -89,7 +89,7 @@ blueprint:
           min: 0
           max: 20
 
-    repeat:
+    awtrix_repeat:
       name: Repeat
       description: Sets how many times the text should be scrolled through the matrix before the app ends.	
       default: 1
@@ -98,7 +98,7 @@ blueprint:
           min: 1
           max: 100
 
-    text_offset:
+    awtrix_text_offset:
       name: Text Offset
       description: Sets an offset for the x position of a starting text.
       default: 0
@@ -107,31 +107,25 @@ blueprint:
           min: 0
           max: 34
     
-    duration:
+    awtrix_duration:
       name: Duration (in seconds)
       description: Sets how long the app should be displayed. 0 is global app time.
-      default: "0"          
+      default: "0"
     
-    appname:
-      name: Appname
-      description: Appname
-      selector:
-        text:
-    
-    text:
+    awtrix_text:
       name: Text
       description: Text to Publish
       selector:
         template: 
     
-    icon:
+    awtrix_icon:
       name: icon
       description: Icon Name
       selector:
         template: 
 
 variables:
-  device_ids: !input awtrix
+  device_ids: !input awtrix_device
   devices: >-
     {% macro get_device(device_id) %}
       {{ states((device_entities(device_id) | select('search','device_topic') | list)[0] | default('unknown')) }}
@@ -142,27 +136,26 @@ variables:
       {% set ns.devices = ns.devices + [ device ] %}
     {% endfor %}
     {{ ns.devices | reject('match','unavailable|unknown') | list }}
-  appname: !input appname
-  retain_input: !input retain
-  retain: >
-    {{ (retain_input | string).lower() }}    
-  appname: !input appname
-  rainbow_input: !input rainbow
-  rainbow: >
+  awtrix_appname: !input awtrix_appname
+  awtrix_retain_input: !input awtrix_retain
+  awtrix_retain: >
+    {{ (retain_input | string).lower() }}
+  awtrix_rainbow_input: !input awtrix_rainbow
+  awtrix_rainbow: >
     {{ (rainbow_input | string).lower() }}
-  push_icon: !input push_icon
-  icon: !input icon
-  text_case: !input text_case
-  text: !input text
-  repeat: !input repeat
-  duration: !input duration
-  pos: !input position
-  text_offset: !input text_offset
-  text_color_input: !input text_color
-  text_color: >
+  awtrix_push_icon: !input awtrix_push_icon
+  awtrix_icon: !input awtrix_icon
+  awtrix_text_case: !input awtrix_text_case
+  awtrix_text: !input awtrix_text
+  awtrix_repeat: !input awtrix_repeat
+  awtrix_duration: !input awtrix_duration
+  awtrix_pos: !input awtrix_position
+  awtrix_text_offset: !input awtrix_text_offset
+  awtrix_text_color_input: !input awtrix_text_color
+  awtrix_text_color: >
     {{ "#%02x%02x%02x" | format(text_color_input[0], text_color_input[1], text_color_input[2]) }}
-  background_color_input: !input background_color
-  background_color: >
+  awtrix_background_color_input: !input awtrix_background_color
+  awtrix_background_color: >
     {{ "#%02x%02x%02x" | format(background_color_input[0], background_color_input[1], background_color_input[2]) }}
 
 sequence:
@@ -172,48 +165,48 @@ sequence:
         - choose:
           - conditions:
             - condition: template
-              value_template: '{{ appname == "" }}'
+              value_template: '{{ awtrix_appname == "" }}'
             sequence:
               - service: mqtt.publish
                 data:
                   qos: 0
-                  retain: "{{retain}}"
+                  retain: "{{awtrix_retain}}"
                   topic: "{{ repeat.item }}/notify"
                   payload: >
                     {
-                      "text": "{{text}}",
-                      "textCase": {{text_case}},
-                      "textOffset": {{text_offset}},
-                      "color": "{{text_color}}",
-                      "background": "{{background_color}}",
-                      "rainbow": {{rainbow}},
-                      "icon": "{{icon}}",
-                      "pushIcon": {{push_icon}},
-                      "repeat":  {{repeat}},
-                      "duration": {{duration}},
-                      "pos": {{pos}}
+                      "text": "{{awtrix_text}}",
+                      "textCase": {{awtrix_text_case}},
+                      "textOffset": {{awtrix_text_offset}},
+                      "color": "{{awtrix_text_color}}",
+                      "background": "{{awtrix_background_color}}",
+                      "rainbow": {{awtrix_rainbow}},
+                      "icon": "{{awtrix_icon}}",
+                      "pushIcon": {{awtrix_push_icon}},
+                      "repeat":  {{awtrix_repeat}},
+                      "duration": {{awtrix_duration}},
+                      "pos": {{awtrix_pos}}
                     }
           - conditions:
             - condition: template
-              value_template: '{{ appname != "" }}'
+              value_template: '{{ awtrix_appname != "" }}'
             sequence:
               - service: mqtt.publish
                 data:
                   qos: 0
-                  retain: "{{retain}}"
+                  retain: "{{awtrix_retain}}"
                   topic: "{{ repeat.item }}/custom/{{ appname }}"
                   payload: >
                     {
-                      "text": "{{text}}",
-                      "textCase": {{text_case}},
-                      "textOffset": {{text_offset}},
-                      "color": "{{text_color}}",
-                      "background": "{{background_color}}",
-                      "rainbow": {{rainbow}},
-                      "icon": "{{icon}}",
-                      "pushIcon": {{push_icon}},
-                      "repeat":  {{repeat}},
-                      "duration": {{duration}},
-                      "pos": {{pos}}
+                      "text": "{{awtrix_text}}",
+                      "textCase": {{awtrix_text_case}},
+                      "textOffset": {{awtrix_text_offset}},
+                      "color": "{{awtrix_text_color}}",
+                      "background": "{{awtrix_background_color}}",
+                      "rainbow": {{awtrix_rainbow}},
+                      "icon": "{{awtrix_icon}}",
+                      "pushIcon": {{awtrix_push_icon}},
+                      "repeat":  {{awtrix_repeat}},
+                      "duration": {{awtrix_duration}},
+                      "pos": {{awtrix_pos}}
                     }
 mode: restart
