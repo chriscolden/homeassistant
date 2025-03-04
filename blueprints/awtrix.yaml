@@ -169,25 +169,51 @@ sequence:
   - repeat:
       for_each: "{{ devices }}"
       sequence:
-        - service: mqtt.publish
-          data:
-            qos: 0
-            retain: "{{retain}}"
-            topic: >
-              {% if appname == "" %}{{ repeat.item }}/notify{% else %}{{ repeat.item }}/custom/{{ appname }}{% endif %}
-            payload: >
-              {
-                "text": "{{text}}",
-                "textCase": {{text_case}},
-                "textOffset": {{text_offset}},
-                "color": "{{text_color}}",
-                "background": "{{background_color}}",
-                "rainbow": {{rainbow}},
-                "icon": "{{icon}}",
-                "pushIcon": {{push_icon}},
-                "repeat":  {{repeat}},
-                "duration": {{duration}},
-                "pos": {{pos}}
-              }
-
+        - choose:
+          - conditions:
+            - condition: template
+              value_template: '{{ appname == "" }}'
+            sequence:
+              - service: mqtt.publish
+                data:
+                  qos: 0
+                  retain: "{{retain}}"
+                  topic: "{{ repeat.item }}/notify"
+                  payload: >
+                    {
+                      "text": "{{text}}",
+                      "textCase": {{text_case}},
+                      "textOffset": {{text_offset}},
+                      "color": "{{text_color}}",
+                      "background": "{{background_color}}",
+                      "rainbow": {{rainbow}},
+                      "icon": "{{icon}}",
+                      "pushIcon": {{push_icon}},
+                      "repeat":  {{repeat}},
+                      "duration": {{duration}},
+                      "pos": {{pos}}
+                    }
+          - conditions:
+            - condition: template
+              value_template: '{{ appname != "" }}'
+            sequence:
+              - service: mqtt.publish
+                data:
+                  qos: 0
+                  retain: "{{retain}}"
+                  topic: "{{ repeat.item }}/custom/{{ appname }}"
+                  payload: >
+                    {
+                      "text": "{{text}}",
+                      "textCase": {{text_case}},
+                      "textOffset": {{text_offset}},
+                      "color": "{{text_color}}",
+                      "background": "{{background_color}}",
+                      "rainbow": {{rainbow}},
+                      "icon": "{{icon}}",
+                      "pushIcon": {{push_icon}},
+                      "repeat":  {{repeat}},
+                      "duration": {{duration}},
+                      "pos": {{pos}}
+                    }
 mode: restart
