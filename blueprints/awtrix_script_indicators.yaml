@@ -73,7 +73,7 @@ variables:
     {% endfor %}
     {{ ns.devices | reject('match','unavailable|unknown') | list }}
   awtrix_indicator: !input awtrix_indicator
-  awtrix_hide: !input awtrix_hide awtrix_hide
+  awtrix_hide: !input awtrix_hide
   awtrix_indicator_color_input: !input awtrix_indicator_color
   awtrix_indicator_color: >
     {{ "#%02x%02x%02x" | format(awtrix_indicator_color_input[0], awtrix_indicator_color_input[1], awtrix_indicator_color_input[2]) }}
