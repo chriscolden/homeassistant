@@ -97,7 +97,7 @@ sequence:
                   payload: >
                     {
                       "color": "{{awtrix_indicator_color}}",
-                      "blink": "{{awtrix_background_color}}",
+                      "blink": "{{awtrix_indicator_blink}}",
                       "fade": {{awtrix_indicator_fade}}
                     }
           - conditions:
