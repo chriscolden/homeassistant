@@ -107,7 +107,7 @@ sequence:
               - service: mqtt.publish
                 data:
                   qos: 0
-                  retain: "{{awtrix_retain}}"
+                  retain: "false"
                   topic: "{{ repeat.item }}/indicator{{awtrix_indicator}}"
                   payload: ""
 mode: restart
