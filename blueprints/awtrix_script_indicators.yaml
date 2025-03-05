@@ -1,1 +1,113 @@
+blueprint:
+  name: Awtrix 
+  description: Awtrix light Text Script
+  author: Chris Colden
+  domain: script
+  input:
+    awtrix_device:
+      name: AWTRIX Device
+      description: Select the AWTRIX 3
+      selector:
+        device:
+          integration: mqtt
+          manufacturer: Blueforcer
+          model: AWTRIX 3
+          multiple: true
 
+    awtrix_indicator:
+      name: Push Icon
+      description: Icon behavior
+      selector:
+        select:
+          options:
+            - label: "Indicator 1 - Upper right corner"
+              value: "1"
+            - label: "Indicator 2 - Right side"
+              value: "2"
+            - label: "Indicator 3 - Lower right corner3"
+              value: "3"
+          mode: dropdown
+
+    awtrix_hide:
+      name: Hide indicator
+      description: Clear the indicator (all other settings irrelevant.
+      selector:
+        boolean:
+      default: false
+
+    awtrix_indicator_color:
+      name: Indicator Color
+      description: Select the Indicator Color
+      selector:
+        color_rgb:
+      default: [255, 0, 0]
+      
+    awtrix_indicator_blink:
+      name: Blink
+      description: Sets the blinking interval in milliseconds.	
+      default: 0
+      selector:
+        number:
+          min: 0
+          max: 100
+    
+    awtrix_indicator_fade:
+      name: Repeat
+      description: Sets fade interval in milliseconds.	
+      default: 0
+      selector:
+        number:
+          min: 0
+          max: 100
+
+variables:
+  device_ids: !input awtrix_device
+  devices: >-
+    {% macro get_device(device_id) %}
+      {{ states((device_entities(device_id) | select('search','device_topic') | list)[0] | default('unknown')) }}
+    {% endmacro %}
+    {% set ns = namespace(devices=[]) %}
+    {% for device_id in device_ids %}
+      {% set device=get_device(device_id)|replace(' ','')|replace('\n','') %}
+      {% set ns.devices = ns.devices + [ device ] %}
+    {% endfor %}
+    {{ ns.devices | reject('match','unavailable|unknown') | list }}
+  awtrix_indicator: !input awtrix_indicator
+  awtrix_hide: !input awtrix_hide awtrix_hide
+  awtrix_indicator_color_input: !input awtrix_indicator_color
+  awtrix_indicator_color: >
+    {{ "#%02x%02x%02x" | format(awtrix_indicator_color_input[0], awtrix_indicator_color_input[1], awtrix_indicator_color_input[2]) }}
+  awtrix_indicator_blink: !input awtrix_indicator_blink
+  awtrix_indicator_fade: !input awtrix_indicator_fade
+
+sequence:
+  - repeat:
+      for_each: "{{ devices }}"
+      sequence:
+        - choose:
+          - conditions:
+            - condition: template
+              value_template: '{{ awtrix_hide == false }}'
+            sequence:
+              - service: mqtt.publish
+                data:
+                  qos: 0
+                  retain: "false"
+                  topic: "{{ repeat.item }}/indicator{{awtrix_indicator}}"
+                  payload: >
+                    {
+                      "color": "{{awtrix_indicator_color}}",
+                      "blink": "{{awtrix_background_color}}",
+                      "fade": {{awtrix_rainbow}}
+                    }
+          - conditions:
+            - condition: template
+              value_template: '{{ awtrix_appname == true }}'
+            sequence:
+              - service: mqtt.publish
+                data:
+                  qos: 0
+                  retain: "{{awtrix_retain}}"
+                  topic: "{{ repeat.item }}/indicator{{awtrix_indicator}}"
+                  payload: ""
+mode: restart
