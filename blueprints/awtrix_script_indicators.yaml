@@ -98,7 +98,7 @@ sequence:
                     {
                       "color": "{{awtrix_indicator_color}}",
                       "blink": "{{awtrix_background_color}}",
-                      "fade": {{awtrix_rainbow}}
+                      "fade": {{awtrix_indicator_fade}}
                     }
           - conditions:
             - condition: template
