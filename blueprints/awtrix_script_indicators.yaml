@@ -52,7 +52,7 @@ blueprint:
           max: 100
     
     awtrix_indicator_fade:
-      name: Repeat
+      name: Fade
       description: Sets fade interval in milliseconds.	
       default: 0
       selector:
