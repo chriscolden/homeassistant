@@ -409,7 +409,7 @@ sequence:
               - service: mqtt.publish
                 data:
                   qos: 0
-                  retain: "{{awtrix_retain}}"
+                  retain: "{{mqtt_retain}}"
                   topic: "{{ repeat.item }}/notify"
                   payload: >
                     {
@@ -432,7 +432,7 @@ sequence:
               - service: mqtt.publish
                 data:
                   qos: 0
-                  retain: "{{awtrix_retain}}"
+                  retain: "{{mqtt_retain}}"
                   topic: "{{ repeat.item }}/custom/{{ appname }}"
                   payload: >
                     {
@@ -443,7 +443,7 @@ sequence:
                       "background": "{{awtrix_background}}",
                       "rainbow": {{awtrix_rainbow}},
                       "icon": "{{awtrix_icon}}",
-                      "pushIcon": {{awtrix_push_icon}},
+                      "pushIcon": {{awtrix_pushIcon}},
                       "repeat":  {{awtrix_repeat}},
                       "duration": {{awtrix_duration}},
                       "pos": {{awtrix_pos}}
