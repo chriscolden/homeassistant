@@ -394,13 +394,6 @@ sequence:
         {%- set awtrix_appname="" -%}
         {%- endif %}
         {{awtrix_appname}}
-      mqtt_retain: >-
-        {%- if mqtt_retain is not defined -%}
-        {%- set mqtt_retain="false" -%}
-        {%- else -%}
-        {%- set mqtt_retain=(mqtt_retain | string).lower() -%}
-        {%- endif %}
-        {{mqtt_retain}}
       awtrix_textOffset: >-
         {%- if awtrix_textOffset is not defined -%}
         {%- set awtrix_textOffset=0 -%}
