@@ -377,27 +377,26 @@ fields:
           - label: "Frost"
             value: "frost"
 
-variables:
-  devices: >-
-    {% macro get_device(device_id) %}
-      {{ states((device_entities(device_id) | select('search','device_topic') | list)[0] | default('unknown')) }}
-    {% endmacro %}
-    {% set ns = namespace(devices=[]) %}
-    {% for device_id in awtrix_device %}
-      {% set device=get_device(device_id)|replace(' ','')|replace('\n','') %}
-      {% set ns.devices = ns.devices + [ device ] %}
-    {% endfor %}
-    {{ ns.devices | reject('match','unavailable|unknown') | list }}
-  awtrix_retain: >-
-    {{ (awtrix_retain | string).lower() }}
-  awtrix_rainbow: >-
-    {{ (awtrix_rainbow | string).lower() }}
-  awtrix_color: >-
-    {{ "#%02x%02x%02x" | format(awtrix_color[0], awtrix_color[1], awtrix_color[2]) }}
-  awtrix_background: >-
-    {{ "#%02x%02x%02x" | format(awtrix_background[0], awtrix_background[1], awtrix_background[2]) }}
-
 sequence:
+  - variables:
+      devices: >-
+        {% macro get_device(device_id) %}
+          {{ states((device_entities(device_id) | select('search','device_topic') | list)[0] | default('unknown')) }}
+        {% endmacro %}
+        {% set ns = namespace(devices=[]) %}
+        {% for device_id in awtrix_device %}
+          {% set device=get_device(device_id)|replace(' ','')|replace('\n','') %}
+          {% set ns.devices = ns.devices + [ device ] %}
+        {% endfor %}
+        {{ ns.devices | reject('match','unavailable|unknown') | list }}
+      awtrix_retain: >-
+        {{ (awtrix_retain | string).lower() }}
+      awtrix_rainbow: >-
+        {{ (awtrix_rainbow | string).lower() }}
+      awtrix_color: >-
+        {{ "#%02x%02x%02x" | format(awtrix_color[0], awtrix_color[1], awtrix_color[2]) }}
+      awtrix_background: >-
+        {{ "#%02x%02x%02x" | format(awtrix_background[0], awtrix_background[1], awtrix_background[2]) }}
   - repeat:
       for_each: "{{ devices }}"
       sequence:
@@ -422,8 +421,7 @@ sequence:
                       "icon": "{{awtrix_icon}}",
                       "pushIcon": {{awtrix_pushIcon}},
                       "repeat":  {{awtrix_repeat}},
-                      "duration": {{awtrix_duration}},
-                      "pos": {{awtrix_pos}}
+                      "duration": {{awtrix_duration}}
                     }
           - conditions:
               - condition: template
