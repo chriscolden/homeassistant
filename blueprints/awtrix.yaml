@@ -193,8 +193,8 @@ action:
       sequence:
         - choose:
           - conditions:
-            - condition: template
-              value_template: '{{ awtrix_appname == "" }}'
+              - condition: template
+                value_template: '{{ awtrix_appname == "" }}'
             sequence:
               - service: mqtt.publish
                 data:
@@ -216,8 +216,8 @@ action:
                       "pos": {{awtrix_pos}}
                     }
           - conditions:
-            - condition: template
-              value_template: '{{ awtrix_appname != "" }}'
+              - condition: template
+                value_template: '{{ awtrix_appname != "" }}'
             sequence:
               - service: mqtt.publish
                 data:
@@ -238,4 +238,4 @@ action:
                       "duration": {{awtrix_duration}},
                       "pos": {{awtrix_pos}}
                     }
-mode: single
+mode: restart
