@@ -398,7 +398,7 @@ sequence:
         {%- if mqtt_retain is not defined -%}
         {%- set mqtt_retain="false" -%}
         {%- else -%}
-        {{ set mqtt_retain=(mqtt_retain | string).lower() }}
+        {%- set mqtt_retain=(mqtt_retain | string).lower() -%}
         {%- endif %}
         {{mqtt_retain}}
       awtrix_textOffset: >-
