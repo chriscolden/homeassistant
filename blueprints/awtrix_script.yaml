@@ -439,7 +439,7 @@ sequence:
                       "text": "{{awtrix_text}}",
                       "textCase": {{awtrix_textCase}},
                       "textOffset": {{awtrix_textOffset}},
-                      "color": "{{awtrix_text_color}}",
+                      "color": "{{awtrix_color}}",
                       "background": "{{awtrix_background}}",
                       "rainbow": {{awtrix_rainbow}},
                       "icon": "{{awtrix_icon}}",
