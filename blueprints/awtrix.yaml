@@ -186,7 +186,7 @@ triggers:
     id: "t1"
     event_type: !input trigger_event_type
     
-condition: []
+condition: []    
 action:
   - repeat:
       for_each: "{{ devices }}"
@@ -215,27 +215,27 @@ action:
                       "duration": {{awtrix_duration}},
                       "pos": {{awtrix_pos}}
                     }
-        - conditions:
-          - condition: template
-            value_template: '{{ awtrix_appname != "" }}'
-          sequence:
-            - service: mqtt.publish
-              data:
-                qos: 0
-                retain: "{{awtrix_retain}}"
-                topic: "{{ repeat.item }}/custom/{{ appname }}"
-                payload: >
-                  {
-                    "text": "{{awtrix_text}}",
-                    "textCase": {{awtrix_text_case}},
-                    "textOffset": {{awtrix_text_offset}},
-                    "color": "{{awtrix_text_color}}",
-                    "background": "{{awtrix_background_color}}",
-                    "rainbow": {{awtrix_rainbow}},
-                    "icon": "{{awtrix_icon}}",
-                    "pushIcon": {{awtrix_push_icon}},
-                    "repeat":  {{awtrix_repeat}},
-                    "duration": {{awtrix_duration}},
-                    "pos": {{awtrix_pos}}
-                  }
+          - conditions:
+            - condition: template
+              value_template: '{{ awtrix_appname != "" }}'
+            sequence:
+              - service: mqtt.publish
+                data:
+                  qos: 0
+                  retain: "{{awtrix_retain}}"
+                  topic: "{{ repeat.item }}/custom/{{ appname }}"
+                  payload: >
+                    {
+                      "text": "{{awtrix_text}}",
+                      "textCase": {{awtrix_text_case}},
+                      "textOffset": {{awtrix_text_offset}},
+                      "color": "{{awtrix_text_color}}",
+                      "background": "{{awtrix_background_color}}",
+                      "rainbow": {{awtrix_rainbow}},
+                      "icon": "{{awtrix_icon}}",
+                      "pushIcon": {{awtrix_push_icon}},
+                      "repeat":  {{awtrix_repeat}},
+                      "duration": {{awtrix_duration}},
+                      "pos": {{awtrix_pos}}
+                    }
 mode: single
