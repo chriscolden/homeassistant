@@ -1,149 +1,386 @@
 blueprint:
   name: Awtrix 
-  description: Awtrix light Text Script
+  description: Awtrix Light
   author: Chris Colden
   domain: script
-  input:
-    awtrix_device:
-      name: AWTRIX Device
-      description: Select the AWTRIX 3
-      selector:
-        device:
-          integration: mqtt
-          manufacturer: Blueforcer
-          model: AWTRIX 3
-          multiple: true
-          
-    awtrix_appname:
-      name: Awtrix Application name
-      description: >-
-        This is the app name listed in the MQTT topic - it should be unique
-      default: ""
-      selector:
-        text:
 
-    awtrix_retain:
-      name: MQTT Retain
-      description: MQTT Retain, be cerful!
-      selector:
-        boolean:
-      default: false
+mode: parallel
+max: 10
+icon: mdi:alpha-a-box
 
-    awtrix_text_color:
-      name: Text Color
-      description: Select the Text Color
-      selector:
-        color_rgb:
-      default: [255, 255, 255]
+fields:
+  awtrix_device:
+    name: AWTRIX Device
+    description: Select the AWTRIX 3
+    required: true
+    selector:
+      device:
+        integration: mqtt
+        manufacturer: Blueforcer
+        model: AWTRIX 3
+        multiple: true
 
-    awtrix_background_color:
-      name: Background Color
-      description: Sets a background color
-      selector:
-        color_rgb:
-      default: [0, 0, 0]
+  awtrix_appname:
+    name: Awtrix Application name
+    description: >-
+      This is the app name listed in the MQTT topic - it should be unique - leave blank for a notification
+    required: false
+    selector:
+      text:
+    default: ""
+      
+  mqtt_retain:
+    name: MQTT Retain
+    description: MQTT Retain, be cerful!
+    required: true
+    selector:
+      boolean:
+    default: false
 
-    awtrix_rainbow:
-      name: Rainbow Effect
-      description: Fades each letter in the text differently through the entire RGB spectrum.
-      selector:
-        boolean:
-      default: false
+  awtrix_text:
+    name: Text
+    description: >-
+      The text to display. Keep in mind the font does not have a fixed size and 'I' uses less space than 'W'.
+    required: false
+    selector:
+      template:
 
-    awtrix_push_icon:
-      name: Push Icon
-      description: Icon behavior
-      selector:
-        select:
-          options:
-            - label: "Icon doesn't move"
-              value: "0"
-            - label: "Icon moves with text and will not appear again"
-              value: "1"
-            - label: "Icon moves with text but appears again when the text starts"
-              value: "2"
-          mode: dropdown
-      default: "0"
+  awtrix_textCase:
+    name: Text Case
+    description: Changes the Uppercase setting.
+    required: false
+    selector:
+      select:
+        options:
+          - label: "Use global setting"
+            value: "0"
+          - label: "Force uppercase"
+            value: "1"
+          - label: "Show as sent"
+            value: "2"
 
-    awtrix_text_case:
-      name: Text Case
-      description: Text Case
-      selector:
-        select:
-          options:
-            - label: "global setting"
-              value: "0"
-            - label: "forces uppercase"
-              value: "1"
-            - label: "shows as it sent"
-              value: "2"
-          mode: dropdown
-      default: "0"
+  awtrix_topText:
+    name: Draw Text on Top
+    description: Draws the text on top.
+    required: false
+    selector:
+      boolean:
 
-    awtrix_position:
-      name: Position
-      description: Position in the Awtrix cycle (Custom App Only)
-      default: 0
-      selector:
-        number:
-          min: 0
-          max: 20
+  awtrix_textOffset:
+    name: Text Offset
+    description: Sets an offset for the x position of a starting text.
+    required: false
+    selector:
+      number:
+        min: -32
+        max: 32
+    default: 0
 
-    awtrix_repeat:
-      name: Repeat
-      description: Sets how many times the text should be scrolled through the matrix before the app ends.	
-      default: -1
-      selector:
-        number:
-          min: -1
-          max: 100
+  awtrix_center:
+    name: Center Text
+    description: Centers a short, non-scrollable text.
+    required: false
+    selector:
+      boolean:
+    default: true
 
-    awtrix_text_offset:
-      name: Text Offset
-      description: Sets an offset for the x position of a starting text.
-      default: 0
-      selector:
-        number:
-          min: 0
-          max: 34
-    
-    awtrix_duration:
-      name: Duration (in seconds)
-      description: Sets how long the app should be displayed. (Default 5)
-      default: "5"
-    
-    awtrix_text:
-      name: Text
-      description: Text to Publish
-      selector:
-        template: 
-    
-    awtrix_icon:
-      name: icon
-      description: Icon Name
-      default: ""
-      selector:
-        template: 
+  awtrix_color:
+    name: Text/Bar/Line Color
+    description: The text, bar, or line color.
+    required: false
+    selector:
+      color_rgb:
+    default: [255, 255, 255]
+
+  awtrix_gradient:
+    name: Gradient Colors
+    description: Colorizes the text in a gradient of two given colors.
+    required: false
+    selector:
+      text:
+
+  awtrix_blinkText:
+    name: Blink Text
+    description: Blinks the text in the given interval in ms (not compatible with gradient or rainbow).
+    required: false
+    selector:
+      number:
+
+  awtrix_fadeText:
+    name: Fade Text
+    description: Fades the text on and off in the given interval in ms (not compatible with gradient or rainbow).
+    required: false
+    selector:
+      number:
+
+  awtrix_background:
+    name: Background Color
+    description: Sets a background color.
+    required: false
+    selector:
+      color_rgb:
+    default: [0, 0, 0]
+
+  awtrix_rainbow:
+    name: Rainbow Text
+    description: Fades each letter in the text differently through the entire RGB spectrum.
+    required: false
+    selector:
+      boolean:
+    default: false
+
+  awtrix_icon:
+    name: Icon
+    description: The icon ID or filename (without extension) or 8x8 jpg as Base64 string.
+    required: false
+    selector:
+      template:
+
+  awtrix_pushIcon:
+    name: Push Icon Behavior
+    description: Controls how the icon moves with the text.
+    required: false
+    selector:
+      select:
+        options:
+          - label: "Icon doesn't move"
+            value: "0"
+          - label: "Icon moves with text and will not appear again"
+            value: "1"
+          - label: "Icon moves with text but appears again when the text starts"
+            value: "2"
+        mode: dropdown
+    default: "0"
+
+  awtrix_repeat:
+    name: Repeat
+    description: Sets how many times the text should scroll before the app ends.
+    required: false
+    selector:
+      number:
+        min: 1
+        max: 100
+    default: 1
+
+  awtrix_duration:
+    name: Duration
+    description: How long the app or notification should be displayed (ms).
+    required: false
+    selector:
+      number:
+        unit_of_measurement: "seconds"
+    default: 0
+
+  awtrix_hold:
+    name: Hold Notification
+    description: Keeps notification on screen until dismissed (only for notifications).
+    required: false
+    selector:
+      boolean:
+    default: false
+
+  awtrix_sound:
+    name: Sound File
+    description: RTTTL filename (without extension) or 4-digit DFPlayer MP3 ID.
+    required: false
+    selector:
+      text:
+
+  awtrix_rtttl:
+    name: RTTTL String
+    description: Allows sending the RTTTL sound string with JSON.
+    required: false
+    selector:
+      text:
+    default: ""
+
+  awtrix_loopSound:
+    name: Loop Sound
+    description: Loops the sound or RTTTL while the notification is active.
+    required: false
+    selector:
+      boolean:
+    default: false
+
+  awtrix_bar:
+    name: Bar Graph Values
+    description: Draws a bar graph (16 values max without icon, 11 with).
+    required: false
+    selector:
+      object:
+
+  awtrix_line:
+    name: Line Chart Values
+    description: Draws a line chart (16 values max without icon, 11 with).
+    required: false
+    selector:
+      object:
+
+  awtrix_autoscale:
+    name: Autoscale Charts
+    description: Enables or disables autoscaling for bar and line charts.
+    required: false
+    selector:
+      boolean:
+    default: true
+
+  awtrix_barBC:
+    name: Bar Background Color
+    description: Background color of the bars.
+    required: false
+    selector:
+      color_rgb:
+    default: [0, 0, 0]
+
+  awtrix_progress:
+    name: Progress Value
+    description: Displays a progress bar (value from 0–100).
+    required: false
+    selector:
+      number:
+        min: -1
+        max: 100
+    default: -1
+
+  awtrix_progressC:
+    name: Progress Color
+    description: Color of the progress bar.
+    required: false
+    selector:
+      color_rgb:
+
+  awtrix_progressBC:
+    name: Progress Background Color
+    description: Background color of the progress bar.
+    required: false
+    selector:
+      color_rgb:
+
+  awtrix_pos:
+    name: App Position
+    description: Defines the position of the custom page in the loop (starts at 0).
+    required: false
+    selector:
+      number:
+
+  awtrix_draw:
+    name: Drawing Instructions
+    description: Array of custom drawing commands (each object represents one).
+    required: false
+    selector:
+      object:
+
+  awtrix_lifetime:
+    name: App Lifetime
+    description: Removes the app when there is no update after this time (seconds).
+    required: false
+    selector:
+      number:
+        unit_of_measurement: "seconds"
+
+  awtrix_lifetimeMode:
+    name: Lifetime Mode
+    description: 0 = Deletes app, 1 = Marks stale with red rectangle.
+    required: false
+    selector:
+      select:
+        options:
+          - label: "Deletes the app"
+            value: "0"
+          - label: "Marks as stale with red rectangle"
+            value: "1"
+
+  awtrix_stack:
+    name: Stack Notification
+    description: If false, replaces current notification immediately.
+    required: false
+    selector:
+      boolean:
+    default: true
+
+  awtrix_wakeup:
+    name: Wake Matrix
+    description: Wakes the Matrix display for the duration of the notification.
+    required: false
+    selector:
+      boolean:
+    default: false
+
+  awtrix_noScroll:
+    name: Disable Scrolling
+    description: Disables scrolling for text.
+    required: false
+    selector:
+      boolean:
+    default: false
+
+  awtrix_scrollSpeed:
+    name: Scroll Speed
+    description: Modifies scroll speed as a percentage of the original.
+    required: false
+    selector:
+      number:
+        unit_of_measurement: "%"
+
+  awtrix_effect:
+    name: Background Effect
+    description: Shows an effect as background. Send empty string to disable.
+    required: false
+    selector:
+      text:
+
+  awtrix_effectSettings:
+    name: Effect Settings
+    description: Adjusts color and speed of the background effect.
+    required: false
+    selector:
+      object:
+
+  awtrix_save:
+    name: Save App
+    description: Saves the custom app to flash (avoid for frequently updated apps).
+    required: false
+    selector:
+      boolean:
+    default: false
+
+  awtrix_overlay:
+    name: Overlay Effect
+    description: Sets an effect overlay (can't be used with global overlays).
+    required: false
+    selector:
+      select:
+        options:
+          - label: "Clear"
+            value: "clear"
+          - label: "Snow"
+            value: "snow"
+          - label: "Rain"
+            value: "rain"
+          - label: "Drizzle"
+            value: "drizzle"
+          - label: "Storm"
+            value: "storm"
+          - label: "Thunder"
+            value: "thunder"
+          - label: "Frost"
+            value: "frost"
 
 variables:
-  device_ids: !input awtrix_device
   devices: >-
     {% macro get_device(device_id) %}
       {{ states((device_entities(device_id) | select('search','device_topic') | list)[0] | default('unknown')) }}
     {% endmacro %}
     {% set ns = namespace(devices=[]) %}
-    {% for device_id in device_ids %}
+    {% for device_id in awtrix_device %}
       {% set device=get_device(device_id)|replace(' ','')|replace('\n','') %}
       {% set ns.devices = ns.devices + [ device ] %}
     {% endfor %}
     {{ ns.devices | reject('match','unavailable|unknown') | list }}
-  awtrix_appname: !input awtrix_appname
-  awtrix_retain_input: !input awtrix_retain
-  awtrix_retain: >
-    {{ (awtrix_retain_input | string).lower() }}
-  awtrix_rainbow_input: !input awtrix_rainbow
-  awtrix_rainbow: >
-    {{ (awtrix_rainbow_input | string).lower() }}
+  awtrix_retain: >-
+    {{ (awtrix_retain | string).lower() }}
+  awtrix_rainbow: >-
+    {{ (awtrix_rainbow | string).lower() }}
   awtrix_push_icon: !input awtrix_push_icon
   awtrix_icon: !input awtrix_icon
   awtrix_text_case: !input awtrix_text_case
@@ -152,12 +389,10 @@ variables:
   awtrix_duration: !input awtrix_duration
   awtrix_pos: !input awtrix_position
   awtrix_text_offset: !input awtrix_text_offset
-  awtrix_text_color_input: !input awtrix_text_color
   awtrix_text_color: >
-    {{ "#%02x%02x%02x" | format(awtrix_text_color_input[0], awtrix_text_color_input[1], awtrix_text_color_input[2]) }}
-  awtrix_background_color_input: !input awtrix_background_color
+    {{ "#%02x%02x%02x" | format(awtrix_text_color[0], awtrix_text_color[1], awtrix_text_color[2]) }}
   awtrix_background_color: >
-    {{ "#%02x%02x%02x" | format(awtrix_background_color_input[0], awtrix_background_color_input[1], awtrix_background_color_input[2]) }}
+    {{ "#%02x%02x%02x" | format(awtrix_background_color[0], awtrix_background_color[1], awtrix_background_color[2]) }}
 
 sequence:
   - repeat:
@@ -165,8 +400,8 @@ sequence:
       sequence:
         - choose:
           - conditions:
-            - condition: template
-              value_template: '{{ awtrix_appname == "" }}'
+              - condition: template
+                value_template: '{{ awtrix_appname == "" }}'
             sequence:
               - service: mqtt.publish
                 data:
@@ -184,11 +419,12 @@ sequence:
                       "icon": "{{awtrix_icon}}",
                       "pushIcon": {{awtrix_push_icon}},
                       "repeat":  {{awtrix_repeat}},
-                      "duration": {{awtrix_duration}}
+                      "duration": {{awtrix_duration}},
+                      "pos": {{awtrix_pos}}
                     }
           - conditions:
-            - condition: template
-              value_template: '{{ awtrix_appname != "" }}'
+              - condition: template
+                value_template: '{{ awtrix_appname != "" }}'
             sequence:
               - service: mqtt.publish
                 data:
@@ -209,4 +445,4 @@ sequence:
                       "duration": {{awtrix_duration}},
                       "pos": {{awtrix_pos}}
                     }
-mode: restart
+mode: single
