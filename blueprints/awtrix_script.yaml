@@ -72,8 +72,8 @@ fields:
     required: false
     selector:
       number:
-        min: -32
-        max: 32
+        min: 0
+        max: 16
     default: 0
 
   awtrix_center:
@@ -394,6 +394,11 @@ sequence:
         {%- set awtrix_appname="" -%}
         {%- endif %}
         {{awtrix_appname}}
+      awtrix_textCase: >-
+        {%- if awtrix_textCase is not defined -%}
+        {%- set awtrix_textCase=0 -%}
+        {%- endif %}
+        {{awtrix_textCase}}
       awtrix_textOffset: >-
         {%- if awtrix_textOffset is not defined -%}
         {%- set awtrix_textOffset=0 -%}
@@ -402,9 +407,19 @@ sequence:
       awtrix_rainbow: >-
         {{ (awtrix_rainbow | string).lower() }}
       awtrix_color: >-
-        {{ "#%02x%02x%02x" | format(awtrix_color[0], awtrix_color[1], awtrix_color[2]) }}
+        {%- if awtrix_color is not defined -%}
+        {%- set awtrix_color="#ffffff" -%}
+        {%- else -%}
+        {%- "#%02x%02x%02x" | format(awtrix_color[0], awtrix_color[1], awtrix_color[2]) -%}
+        {%- endif %}
+        {{awtrix_color}}
       awtrix_background: >-
-        {{ "#%02x%02x%02x" | format(awtrix_background[0], awtrix_background[1], awtrix_background[2]) }}
+        {%- if awtrix_background is not defined -%}
+        {%- set awtrix_background="#000000" -%}
+        {%- else -%}
+        {%- "#%02x%02x%02x" | format(awtrix_background[0], awtrix_background[1], awtrix_background[2]) -%}
+        {%- endif %}
+        {{awtrix_background}}
   - repeat:
       for_each: "{{ devices }}"
       sequence:
