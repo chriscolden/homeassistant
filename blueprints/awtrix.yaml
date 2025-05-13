@@ -188,7 +188,7 @@ triggers:
     
 condition: []
 action:
-  - repeat:
+  repeat:
     for_each: "{{ devices }}"
     sequence:
       - choose:
