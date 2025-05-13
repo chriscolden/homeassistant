@@ -381,17 +381,9 @@ variables:
     {{ (awtrix_retain | string).lower() }}
   awtrix_rainbow: >-
     {{ (awtrix_rainbow | string).lower() }}
-  awtrix_push_icon: !input awtrix_push_icon
-  awtrix_icon: !input awtrix_icon
-  awtrix_text_case: !input awtrix_text_case
-  awtrix_text: !input awtrix_text
-  awtrix_repeat: !input awtrix_repeat
-  awtrix_duration: !input awtrix_duration
-  awtrix_pos: !input awtrix_position
-  awtrix_text_offset: !input awtrix_text_offset
-  awtrix_text_color: >
+  awtrix_text_color: >-
     {{ "#%02x%02x%02x" | format(awtrix_text_color[0], awtrix_text_color[1], awtrix_text_color[2]) }}
-  awtrix_background_color: >
+  awtrix_background_color: >-
     {{ "#%02x%02x%02x" | format(awtrix_background_color[0], awtrix_background_color[1], awtrix_background_color[2]) }}
 
 sequence:
@@ -411,13 +403,13 @@ sequence:
                   payload: >
                     {
                       "text": "{{awtrix_text}}",
-                      "textCase": {{awtrix_text_case}},
-                      "textOffset": {{awtrix_text_offset}},
-                      "color": "{{awtrix_text_color}}",
-                      "background": "{{awtrix_background_color}}",
+                      "textCase": {{awtrix_textCase}},
+                      "textOffset": {{awtrix_textOffset}},
+                      "color": "{{awtrix_color}}",
+                      "background": "{{awtrix_background}}",
                       "rainbow": {{awtrix_rainbow}},
                       "icon": "{{awtrix_icon}}",
-                      "pushIcon": {{awtrix_push_icon}},
+                      "pushIcon": {{awtrix_pushIcon}},
                       "repeat":  {{awtrix_repeat}},
                       "duration": {{awtrix_duration}},
                       "pos": {{awtrix_pos}}
@@ -434,10 +426,10 @@ sequence:
                   payload: >
                     {
                       "text": "{{awtrix_text}}",
-                      "textCase": {{awtrix_text_case}},
-                      "textOffset": {{awtrix_text_offset}},
+                      "textCase": {{awtrix_textCase}},
+                      "textOffset": {{awtrix_textOffset}},
                       "color": "{{awtrix_text_color}}",
-                      "background": "{{awtrix_background_color}}",
+                      "background": "{{awtrix_background}}",
                       "rainbow": {{awtrix_rainbow}},
                       "icon": "{{awtrix_icon}}",
                       "pushIcon": {{awtrix_push_icon}},
