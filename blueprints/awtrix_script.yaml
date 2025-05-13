@@ -409,7 +409,7 @@ sequence:
               - service: mqtt.publish
                 data:
                   qos: 0
-                  retain: "{{mqtt_retain}}"
+                  retain: false
                   topic: "{{ repeat.item }}/notify"
                   payload: >
                     {
@@ -432,7 +432,7 @@ sequence:
               - service: mqtt.publish
                 data:
                   qos: 0
-                  retain: "{{mqtt_retain}}"
+                  retain: false
                   topic: "{{ repeat.item }}/custom/{{ appname }}"
                   payload: >
                     {
