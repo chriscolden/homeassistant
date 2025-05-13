@@ -186,7 +186,8 @@ triggers:
     id: "t1"
     event_type: !input trigger_event_type
     
-sequence:
+condition: []
+action:
   - repeat:
     for_each: "{{ devices }}"
     sequence:
