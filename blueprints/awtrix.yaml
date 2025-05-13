@@ -1,9 +1,25 @@
 blueprint:
   name: Awtrix 
-  description: Awtrix light Text Script
+  description: Awtrix Light
   author: Chris Colden
-  domain: blueprint
+  domain: automation
   input:
+    trigger_entity:
+      name: Trigger Entity
+      description: >
+        The entity which will trigger the automation.
+      default: []
+      selector:
+        entity:
+      
+    trigger_event_type:
+      name: Trigger Event Type
+      description: >-
+        The event type which should trigger the automation.
+      default: ""
+      selector:
+        text:
+    
     awtrix_device:
       name: AWTRIX Device
       description: Select the AWTRIX 3
@@ -18,7 +34,7 @@ blueprint:
       name: Awtrix Application name
       description: >-
         This is the app name listed in the MQTT topic - it should be unique
-      default: ""
+      default: "mycustomapp"
       selector:
         text:
 
@@ -82,7 +98,7 @@ blueprint:
 
     awtrix_position:
       name: Position
-      description: Position in the Awtrix cycle (Custom App Only)
+      description: Position in the Awtrix cycle
       default: 0
       selector:
         number:
@@ -92,10 +108,10 @@ blueprint:
     awtrix_repeat:
       name: Repeat
       description: Sets how many times the text should be scrolled through the matrix before the app ends.	
-      default: -1
+      default: 1
       selector:
         number:
-          min: -1
+          min: 1
           max: 100
 
     awtrix_text_offset:
@@ -109,8 +125,8 @@ blueprint:
     
     awtrix_duration:
       name: Duration (in seconds)
-      description: Sets how long the app should be displayed. (Default 5)
-      default: "5"
+      description: Sets how long the app should be displayed. 0 is global app time.
+      default: "0"
     
     awtrix_text:
       name: Text
@@ -121,11 +137,12 @@ blueprint:
     awtrix_icon:
       name: icon
       description: Icon Name
-      default: ""
       selector:
         template: 
 
 variables:
+  trigger_entity: !input trigger_entity
+  trigger_event_type: !input trigger_event_type
   device_ids: !input awtrix_device
   devices: >-
     {% macro get_device(device_id) %}
@@ -159,6 +176,16 @@ variables:
   awtrix_background_color: >
     {{ "#%02x%02x%02x" | format(awtrix_background_color_input[0], awtrix_background_color_input[1], awtrix_background_color_input[2]) }}
 
+triggers:
+  - trigger: state
+    id: "t0"
+    entity_id: !input trigger_entity
+    from: "off"
+    to: "on"
+  - trigger: event
+    id: "t1"
+    event_type: !input trigger_event_type
+    
 sequence:
   - repeat:
       for_each: "{{ devices }}"
@@ -184,7 +211,8 @@ sequence:
                       "icon": "{{awtrix_icon}}",
                       "pushIcon": {{awtrix_push_icon}},
                       "repeat":  {{awtrix_repeat}},
-                      "duration": {{awtrix_duration}}
+                      "duration": {{awtrix_duration}},
+                      "pos": {{awtrix_pos}}
                     }
           - conditions:
             - condition: template
