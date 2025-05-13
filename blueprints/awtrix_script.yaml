@@ -389,8 +389,23 @@ sequence:
           {% set ns.devices = ns.devices + [ device ] %}
         {% endfor %}
         {{ ns.devices | reject('match','unavailable|unknown') | list }}
-      awtrix_retain: >-
-        {{ (awtrix_retain | string).lower() }}
+      awtrix_appname: >-
+        {%- if awtrix_appname is not defined -%}
+        {%- set awtrix_appname="" -%}
+        {%- endif %}
+        {{awtrix_appname}}
+      mqtt_retain: >-
+        {%- if mqtt_retain is not defined -%}
+        {%- set mqtt_retain="false" -%}
+        {%- else -%}
+        {{ set mqtt_retain=(mqtt_retain | string).lower() }}
+        {%- endif %}
+        {{mqtt_retain}}
+      awtrix_textOffset: >-
+        {%- if awtrix_textOffset is not defined -%}
+        {%- set awtrix_textOffset=0 -%}
+        {%- endif %}
+        {{awtrix_textOffset}}
       awtrix_rainbow: >-
         {{ (awtrix_rainbow | string).lower() }}
       awtrix_color: >-
