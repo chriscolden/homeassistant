@@ -2,7 +2,7 @@ blueprint:
   name: Awtrix 
   description: Awtrix light Text Script
   author: Chris Colden
-  domain: script
+  domain: blueprint
   input:
     awtrix_device:
       name: AWTRIX Device
