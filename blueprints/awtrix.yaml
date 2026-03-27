@@ -107,7 +107,7 @@ blueprint:
 
     awtrix_repeat:
       name: Repeat
-      description: Sets how many times the text should be scrolled through the matrix before the app ends.	
+      description: Sets how many times the text should be scrolled through the matrix before the app ends.
       default: 1
       selector:
         number:
