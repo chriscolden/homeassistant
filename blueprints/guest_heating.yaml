@@ -1,34 +1,46 @@
 blueprint:
   source_url: https://raw.githubusercontent.com/chriscolden/homeassistant/refs/heads/main/blueprints/guest_heating.yaml
-  name: "Guest Heating"
-  description: "Overrides the default Tado heating schedule when guests are staying"
+  name: Guest Heating
+  description: Overrides the default Tado heating schedule when guests are staying
   domain: automation
-  author: "Chris Colden"
+  author: Chris Colden
   input:
     climate_entity:
       name: Climate Entity
       description: The climate entity for this automation
       selector:
         entity:
-          domain: climate
+          domain:
+            - climate
+          reorder: false
+          multiple: false
     schedule_entity:
       name: Schedule Entity
       description: The schedule entity for this automation
       selector:
         entity:
-          domain: schedule
+          domain:
+            - schedule
+          reorder: false
+          multiple: false
     check_in:
       name: Check-In Entity
       description: The check-in date time entity for this automation
       selector:
         entity:
-          domain: input_datetime
+          domain:
+            - input_datetime
+          reorder: false
+          multiple: false
     check_out:
       name: Check-Out Entity
       description: The check-out date time entity for this automation
       selector:
         entity:
-          domain: input_datetime
+          domain:
+            - input_datetime
+          reorder: false
+          multiple: false
     hvac_mode:
       name: End Climate Mode State
       description: Climate mode to set when schedule ends
@@ -38,6 +50,9 @@ blueprint:
           options:
             - "off"
             - auto
+          custom_value: false
+          sort: false
+          multiple: false
 triggers:
   - trigger: state
     entity_id:
@@ -70,17 +85,12 @@ actions:
             target:
               entity_id: !input climate_entity
             data:
-              time_period: >-
-                {% set diff = (trigger.to_state.attributes.next_event -
-                now()).total_seconds() | int %}
-
+              time_period: >
+                {% set diff = (trigger.to_state.attributes.next_event - now()).total_seconds() | int %}
                 {% set hours = diff // 3600 %}
-
                 {% set minutes = (diff % 3600) // 60 %}
-
                 {% set seconds = diff % 60 %}
-
-                {{ '%02d:%02d:%02d' | format(hours, minutes, seconds) }}
+                {{ '%02d:%02d:%02d' | format(hours, minutes, seconds) }}"
               temperature: "{{ trigger.to_state.attributes.temperature | float }}"
       - conditions:
           - condition: trigger
