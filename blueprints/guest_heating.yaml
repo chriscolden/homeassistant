@@ -51,10 +51,13 @@ triggers:
     to:
       - "off"
     id: HeatingOff
-conditions:
-  - condition: time
-    after: !input check_in
-    before: !input check_out
+condition:
+  - condition: template
+    value_template: >
+      {% set start = as_timestamp(states(!input check_in)) %}
+      {% set end = as_timestamp(states(!input check_out)) %}
+      {% set now_ts = as_timestamp(now()) %}
+      {{ start <= now_ts <= end }}
 actions:
   - choose:
       - conditions:
