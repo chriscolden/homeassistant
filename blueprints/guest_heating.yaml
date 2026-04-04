@@ -53,6 +53,9 @@ blueprint:
           custom_value: false
           sort: false
           multiple: false
+variables:
+  start_entity: !input check_in
+  end_entity: !input check_out
 triggers:
   - trigger: state
     entity_id:
@@ -69,8 +72,8 @@ triggers:
 condition:
   - condition: template
     value_template: >
-      {% set start = as_timestamp(states(!input check_in)) %}
-      {% set end = as_timestamp(states(!input check_out)) %}
+      {% set start = as_timestamp(states(start_entity)) %}
+      {% set end = as_timestamp(states(end_entity)) %}
       {% set now_ts = as_timestamp(now()) %}
       {{ start <= now_ts <= end }}
 actions:
@@ -90,7 +93,7 @@ actions:
                 {% set hours = diff // 3600 %}
                 {% set minutes = (diff % 3600) // 60 %}
                 {% set seconds = diff % 60 %}
-                {{ '%02d:%02d:%02d' | format(hours, minutes, seconds) }}"
+                {{ '%02d:%02d:%02d' | format(hours, minutes, seconds) }}
               temperature: "{{ trigger.to_state.attributes.temperature | float }}"
       - conditions:
           - condition: trigger
