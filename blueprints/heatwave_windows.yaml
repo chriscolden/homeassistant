@@ -1,0 +1,143 @@
+blueprint:
+  name: "Heatwave Windows"
+  description: >
+    Sends a notification to open or close windows during a heatwave,
+    by comparing indoor and outdoor temperatures.
+  domain: automation
+  input:
+    weather_entity:
+      name: Weather entity
+      description: Select the weather entity that provides the daily forecast.
+      selector:
+        entity:
+          domain: weather
+    forecast_temperature:
+      name: Minimum forecast temperature (°C)
+      description: Only send notifications if today's forecast high is at or above this temperature.
+      default: 25
+      selector:
+        number:
+          min: 15
+          max: 50
+          step: 1
+          unit_of_measurement: "°C"
+    outdoor_sensors:
+      name: Outdoor sensors
+      description: Select all outdoor temperature sensors
+      selector:
+        entity:
+          multiple: true
+          device_class: temperature
+    indoor_sensors:
+      name: Indoor sensors
+      description: Select all indoor temperature sensors
+      selector:
+        entity:
+          multiple: true
+          device_class: temperature
+    devices_notification:
+      name: Devices to notify
+      description: >
+        Select one or more mobile devices (HA companion app).
+      selector:
+        device:
+          integration: mobile_app
+          multiple: true
+    delay_minutes:
+      name: Delay (minutes)
+      default: 10
+      selector:
+        number:
+          min: 1
+          max: 60
+          unit_of_measurement: minutes
+trigger_variables:
+  outdoor_sensors: !input outdoor_sensors
+  indoor_sensors: !input indoor_sensors
+  
+trigger:
+  - platform: template
+    value_template: >
+      {% set temps_ext = expand(outdoor_sensors) | map(attribute='state') | map('float', none) | reject('none') | list %}
+      {% set temps_int = expand(indoor_sensors) | map(attribute='state') | map('float', none) | reject('none') | list %}
+      {% if temps_ext | length > 0 and temps_int | length > 0 %}
+        {{ temps_ext | max < temps_int | min }}
+      {% else %}
+        false
+      {% endif %}
+    for:
+      minutes: !input delay_minutes
+    id: open
+  - platform: template
+    value_template: >
+      {% set temps_ext = expand(outdoor_sensors) | map(attribute='state') | map('float', none) | reject('none') | list %}
+      {% set temps_int = expand(indoor_sensors) | map(attribute='state') | map('float', none) | reject('none') | list %}
+      {% if temps_ext | length > 0 and temps_int | length > 0 %}
+        {{ temps_ext | max > temps_int | min }}
+      {% else %}
+        false
+      {% endif %}
+    for:
+      minutes: !input delay_minutes
+    id: close
+
+action:
+  - variables:
+      weather_entity: !input weather_entity
+      forecast_temperature: !input forecast_temperature
+      ext_sensors: !input outdoor_sensors
+      int_sensors: !input indoor_sensors
+      devices_raw: !input devices_notification
+  - action: weather.get_forecasts
+    target:
+      entity_id: !input weather_entity
+    data:
+      type: daily
+    response_variable: daily_forecast
+  - condition: template
+    value_template: >
+      {% set forecast = daily_forecast[weather_entity].forecast %}
+      {{ forecast | count > 0 and forecast[0].temperature >= forecast_temperature }}
+  - variables:
+      temp_max_ext: >
+        {% set vals = expand(ext_sensors) | map(attribute='state') | map('float', none) | reject('none') | list %}
+        {{ vals | max | round(1) if vals | length > 0 else '?' }}
+      temp_min_int: >
+        {% set vals = expand(int_sensors) | map(attribute='state') | map('float', none) | reject('none') | list %}
+        {{ vals | min | round(1) if vals | length > 0 else '?' }}
+      devices_list: "{{ devices_raw if devices_raw is list else [devices_raw] }}"
+      trigger_id: "{{ trigger.id | default('') }}"
+  - variables:
+      decision: >
+        {% if trigger_id in ['open', 'close'] %}
+          {{ trigger_id }}
+        {% else %}
+          {% set temps_ext = expand(ext_sensors) | map(attribute='state') | map('float', none) | reject('none') | list %}
+          {% set temps_int = expand(int_sensors) | map(attribute='state') | map('float', none) | reject('none') | list %}
+          {% if temps_ext | length > 0 and temps_int | length > 0 and temps_ext | max < temps_int | min %}
+            open
+          {% else %}
+            close
+          {% endif %}
+        {% endif %}
+  - variables:
+      device_ids: "{{ devices_list | select('string') | unique | list }}"
+      title: >
+        {% if decision == 'open' %}
+          🪟 Open the windows!
+        {% else %}
+          🪟 Close the windows!
+        {% endif %}
+      message: >
+        {% if decision == 'open' %}
+          It's cooler outside (max {{ temp_max_ext }}°C) than inside (min {{ temp_min_int }}°C). Time to ventilate!
+        {% else %}
+          It's warmer outside (max {{ temp_max_ext }}°C) than inside (min {{ temp_min_int }}°C). Close to keep the cool air in!
+        {% endif %}
+  - repeat:
+      for_each: "{{ device_ids }}"
+      sequence:
+        - service: "notify.mobile_app_{{ device_attr(repeat.item, 'name') | slugify }}"
+          data:
+            title: "{{ title }}"
+            message: "{{ message }}"
