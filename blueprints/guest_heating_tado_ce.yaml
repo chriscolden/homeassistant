@@ -1,0 +1,109 @@
+blueprint:
+  source_url: https://raw.githubusercontent.com/chriscolden/homeassistant/refs/heads/main/blueprints/guest_heating_tado_ce.yaml
+  name: Guest Heating (Tado CE)
+  description: Overrides the default Tado heating schedule when guests are staying
+  domain: automation
+  author: Chris Colden
+  input:
+    climate_entity:
+      name: Climate Entity
+      description: The climate entity for this automation
+      selector:
+        entity:
+          domain:
+            - climate
+          reorder: false
+          multiple: false
+    schedule_entity:
+      name: Schedule Entity
+      description: The schedule entity for this automation
+      selector:
+        entity:
+          domain:
+            - schedule
+          reorder: false
+          multiple: false
+    check_in:
+      name: Check-In Entity
+      description: The check-in date time entity for this automation
+      selector:
+        entity:
+          domain:
+            - input_datetime
+          reorder: false
+          multiple: false
+    check_out:
+      name: Check-Out Entity
+      description: The check-out date time entity for this automation
+      selector:
+        entity:
+          domain:
+            - input_datetime
+          reorder: false
+          multiple: false
+    hvac_mode:
+      name: End Climate Mode State
+      description: Climate mode to set when schedule ends
+      default: auto
+      selector:
+        select:
+          options:
+            - "off"
+            - auto
+          custom_value: false
+          sort: false
+          multiple: false
+variables:
+  start_entity: !input check_in
+  end_entity: !input check_out
+triggers:
+  - trigger: state
+    entity_id:
+      - !input schedule_entity
+    to:
+      - "on"
+    id: HeatingOn
+  - trigger: state
+    entity_id:
+      - !input schedule_entity
+    to:
+      - "off"
+    id: HeatingOff
+condition:
+  - condition: template
+    value_template: >
+      {% set start = as_timestamp(states(start_entity)) %}
+      {% set end = as_timestamp(states(end_entity)) %}
+      {% set now_ts = as_timestamp(now()) %}
+      {{ start <= now_ts <= end }}
+actions:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id:
+              - HeatingOn
+        sequence:
+          - action: tado_ce.set_climate_timer
+            metadata: {}
+            target:
+              entity_id: !input climate_entity
+            data:
+              time_period: >
+                {% set diff = (trigger.to_state.attributes.next_event - now()).total_seconds() | int %}
+                {% set hours = diff // 3600 %}
+                {% set minutes = (diff % 3600) // 60 %}
+                {% set seconds = diff % 60 %}
+                {{ '%02d:%02d:%02d' | format(hours, minutes, seconds) }}
+              temperature: "{{ trigger.to_state.attributes.temperature | float }}"
+      - conditions:
+          - condition: trigger
+            id:
+              - HeatingOff
+        sequence:
+          - action: climate.set_hvac_mode
+            metadata: {}
+            target:
+              entity_id: !input climate_entity
+            data:
+              hvac_mode: !input hvac_mode
+mode: queued
