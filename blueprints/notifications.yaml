@@ -864,9 +864,11 @@ sequence:
       expect_response: >-
         {{ enable_timeout or option_one_enabled or option_two_enabled or option_three_enabled }}
 
-  - alias: Wait for response
+  - alias: Initialize response trigger
     variables:
       wait_trigger: null
+
+  - alias: Wait for response
     choose:
       - alias: Wait with timeout
         conditions:
