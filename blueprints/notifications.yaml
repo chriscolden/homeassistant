@@ -1,13 +1,11 @@
 mode: restart
-
 blueprint:
-  name: 🔔 Notifications (Version 2.1.0 - Fields)
+  name: 🔔 Notifications (Version 2.2.0 - Fields)
   description: >-
     Actionable mobile notification script for Home Assistant Companion.
-    All configurable values are exposed as script fields and copied into
-    runtime variables. Response callbacks use selectable script entities so
-    field-provided callbacks can be executed without templating a dynamic
-    choose.sequence.
+    All configurable values are exposed as script fields and copied into runtime
+    variables. Response callbacks use selectable script entities so field-provided
+    callbacks can be executed without templating a dynamic choose.sequence.
   domain: script
   source_url: https://github.com/chriscolden/homeassistant/blob/main/blueprints/notifications.yaml
   author: chriscolden/homeassistant
@@ -28,31 +26,26 @@ blueprint:
       default: ""
       selector:
         text:
-
     subtitle:
       name: "🏷️ Subtitle"
       default: ""
       selector:
         text:
-
     message:
       name: "💬 Message"
       default: ""
       selector:
         text:
-
     icon:
       name: "🙂 Icon"
       default: ""
       selector:
         icon:
-
     enable_icon_color:
       name: "🎨 Use Icon Color"
       default: false
       selector:
         boolean:
-
     icon_color:
       name: "🎨 Icon Color"
       default: [102, 186, 240]
@@ -61,16 +54,14 @@ blueprint:
 
     confirm_enabled:
       name: "1️⃣ Option 1"
-      default: true
+      default: false
       selector:
         boolean:
-
     confirm_text:
       name: "1️⃣ Option 1 - Title"
       default: "Option 1"
       selector:
         text:
-
     confirm_option_mode:
       name: "1️⃣ Option 1 - Mode"
       default: ""
@@ -82,40 +73,32 @@ blueprint:
               value: ""
             - label: Action(s)
               value: action
-            - label: Link (🤖 Android Only)
+            - label: "Link (🤖 Android Only)"
               value: uri
-
     confirm_action_script:
       name: "1️⃣ Option 1 - Callback Script"
-      description: >-
-        Script to run when Option 1 is selected. The selected script receives
-        the notification response as the `notification_response` variable.
       default: ""
       selector:
         entity:
           filter:
             - domain: script
-
     confirm_uri:
       name: "1️⃣ Option 1 - Link"
       default: ""
       selector:
         text:
           type: url
-
     confirm_icon:
       name: "1️⃣ Option 1 - Icon"
       default: ""
       selector:
         text:
           prefix: "sfsymbols:"
-
     confirm_is_destructive:
       name: "1️⃣ Option 1 - Destructive"
       default: false
       selector:
         boolean:
-
     confirm_authentication_required:
       name: "1️⃣ Option 1 - Authentication Required"
       default: false
@@ -124,16 +107,14 @@ blueprint:
 
     dismiss_enabled:
       name: "2️⃣ Option 2"
-      default: true
+      default: false
       selector:
         boolean:
-
     dismiss_text:
       name: "2️⃣ Option 2 - Title"
       default: "Option 2"
       selector:
         text:
-
     dismiss_option_mode:
       name: "2️⃣ Option 2 - Mode"
       default: ""
@@ -145,38 +126,32 @@ blueprint:
               value: ""
             - label: Action(s)
               value: action
-            - label: Link (🤖 Android Only)
+            - label: "Link (🤖 Android Only)"
               value: uri
-
     dismiss_action_script:
       name: "2️⃣ Option 2 - Callback Script"
-      description: "Script to run when Option 2 is selected."
       default: ""
       selector:
         entity:
           filter:
             - domain: script
-
     dismiss_uri:
       name: "2️⃣ Option 2 - Link"
       default: ""
       selector:
         text:
           type: url
-
     dismiss_icon:
       name: "2️⃣ Option 2 - Icon"
       default: ""
       selector:
         text:
           prefix: "sfsymbols:"
-
     dismiss_is_destructive:
       name: "2️⃣ Option 2 - Destructive"
       default: false
       selector:
         boolean:
-
     dismiss_authentication_required:
       name: "2️⃣ Option 2 - Authentication Required"
       default: false
@@ -188,13 +163,11 @@ blueprint:
       default: false
       selector:
         boolean:
-
     option_three_text:
       name: "3️⃣ Option 3 - Title"
       default: "Option 3"
       selector:
         text:
-
     option_three_option_mode:
       name: "3️⃣ Option 3 - Mode"
       default: ""
@@ -206,38 +179,32 @@ blueprint:
               value: ""
             - label: Action(s)
               value: action
-            - label: Link (🤖 Android Only)
+            - label: "Link (🤖 Android Only)"
               value: uri
-
     option_three_action_script:
       name: "3️⃣ Option 3 - Callback Script"
-      description: "Script to run when Option 3 is selected."
       default: ""
       selector:
         entity:
           filter:
             - domain: script
-
     option_three_uri:
       name: "3️⃣ Option 3 - Link"
       default: ""
       selector:
         text:
           type: url
-
     option_three_icon:
       name: "3️⃣ Option 3 - Icon"
       default: ""
       selector:
         text:
           prefix: "sfsymbols:"
-
     option_three_is_destructive:
       name: "3️⃣ Option 3 - Destructive"
       default: false
       selector:
         boolean:
-
     option_three_authentication_required:
       name: "3️⃣ Option 3 - Authentication Required"
       default: false
@@ -246,10 +213,9 @@ blueprint:
 
     enable_timeout:
       name: "⌛️ Enable Timeout"
-      default: true
+      default: false
       selector:
         boolean:
-
     timeout:
       name: "⌛️ Timeout Duration"
       default:
@@ -259,34 +225,28 @@ blueprint:
       selector:
         duration:
           enable_day: false
-
     run_timeout_actions:
       name: "⌛️ Enable Timeout Action(s)"
-      default: true
+      default: false
       selector:
         boolean:
-
     timeout_action_script:
       name: "⌛️ Timeout Callback Script"
-      description: "Script to run when the notification times out or is cleared as a timeout."
       default: ""
       selector:
         entity:
           filter:
             - domain: script
-
     swipe_away_as_timeout:
       name: "⌛️ Run timeout action(s) when notification cleared"
       default: false
       selector:
         boolean:
-
     clear_on_timeout:
       name: "🧹 Clear notification on timeout"
       default: false
       selector:
         boolean:
-
     persist:
       name: "🚩 Persistent Notification"
       default: false
@@ -298,7 +258,6 @@ blueprint:
       default: ""
       selector:
         text:
-
     attachment_type:
       name: "📸 Attachment Type"
       default: "none"
@@ -309,7 +268,6 @@ blueprint:
               value: none
             - label: Camera
               value: camera_entity
-
     attachment_camera_entity:
       name: "📸 Attachment: Camera Entity"
       default: ""
@@ -317,52 +275,45 @@ blueprint:
         entity:
           filter:
             - domain: camera
-
     car_ui:
       name: "🚘 Show on Android Auto"
       default: false
       selector:
         boolean:
-
     tag:
       name: "🔖 Tag"
       default: ""
       selector:
         text:
-
     group:
       name: "📣 Notification Group ID"
       default: ""
       selector:
         text:
-
     channel:
       name: "📣 Notification Channel"
       default: General
       selector:
         text:
-
     importance:
       name: "❕ Notification Channel Importance"
       default: default
       selector:
         select:
           options:
-            - label: "Urgent"
+            - label: Urgent
               value: high
-            - label: "Default"
+            - label: Default
               value: default
-            - label: "Silent"
+            - label: Silent
               value: low
-            - label: "Low"
+            - label: Low
               value: min
-
     android_high_priority:
       name: "❕ High Priority Mode"
-      default: true
+      default: false
       selector:
         boolean:
-
     interruption_level:
       name: "❕ Interruption Level"
       default: active
@@ -377,7 +328,6 @@ blueprint:
               value: time-sensitive
             - label: Critical
               value: critical
-
     visibility:
       name: "🔏 Notification Lockscreen Visibility"
       default: private
@@ -399,37 +349,31 @@ fields:
       device:
         filter:
           - integration: mobile_app
-
   field_title:
     name: "🏷️ Title"
     default: !input title
     selector:
       text:
-
   field_subtitle:
     name: "🏷️ Subtitle"
     default: !input subtitle
     selector:
       text:
-
   field_message:
     name: "💬 Message"
     default: !input message
     selector:
       text:
-
   field_icon:
     name: "🙂 Icon"
     default: !input icon
     selector:
       icon:
-
   field_enable_icon_color:
     name: "🎨 Use Icon Color"
-    default: !input enable_icon_color
+    default: false
     selector:
       boolean:
-
   field_icon_color:
     name: "🎨 Icon Color"
     default: !input icon_color
@@ -438,16 +382,14 @@ fields:
 
   field_option_one_enabled:
     name: "1️⃣ Option 1 - Enabled"
-    default: !input confirm_enabled
+    default: false
     selector:
       boolean:
-
   field_option_one_title:
     name: "1️⃣ Option 1 - Title"
     default: !input confirm_text
     selector:
       text:
-
   field_option_one_mode:
     name: "1️⃣ Option 1 - Mode"
     default: !input confirm_option_mode
@@ -459,9 +401,8 @@ fields:
             value: ""
           - label: Action(s)
             value: action
-          - label: Link (🤖 Android Only)
+          - label: "Link (🤖 Android Only)"
             value: uri
-
   field_option_one_script:
     name: "1️⃣ Option 1 - Callback Script"
     default: !input confirm_action_script
@@ -469,45 +410,39 @@ fields:
       entity:
         filter:
           - domain: script
-
   field_option_one_uri:
     name: "1️⃣ Option 1 - Link"
     default: !input confirm_uri
     selector:
       text:
         type: url
-
   field_option_one_icon:
     name: "1️⃣ Option 1 - Icon"
     default: !input confirm_icon
     selector:
       text:
         prefix: "sfsymbols:"
-
   field_option_one_destructive:
     name: "1️⃣ Option 1 - Destructive"
-    default: !input confirm_is_destructive
+    default: false
     selector:
       boolean:
-
   field_option_one_authentication_required:
     name: "1️⃣ Option 1 - Authentication Required"
-    default: !input confirm_authentication_required
+    default: false
     selector:
       boolean:
 
   field_option_two_enabled:
     name: "2️⃣ Option 2 - Enabled"
-    default: !input dismiss_enabled
+    default: false
     selector:
       boolean:
-
   field_option_two_title:
     name: "2️⃣ Option 2 - Title"
     default: !input dismiss_text
     selector:
       text:
-
   field_option_two_mode:
     name: "2️⃣ Option 2 - Mode"
     default: !input dismiss_option_mode
@@ -519,9 +454,8 @@ fields:
             value: ""
           - label: Action(s)
             value: action
-          - label: Link (🤖 Android Only)
+          - label: "Link (🤖 Android Only)"
             value: uri
-
   field_option_two_script:
     name: "2️⃣ Option 2 - Callback Script"
     default: !input dismiss_action_script
@@ -529,45 +463,39 @@ fields:
       entity:
         filter:
           - domain: script
-
   field_option_two_uri:
     name: "2️⃣ Option 2 - Link"
     default: !input dismiss_uri
     selector:
       text:
         type: url
-
   field_option_two_icon:
     name: "2️⃣ Option 2 - Icon"
     default: !input dismiss_icon
     selector:
       text:
         prefix: "sfsymbols:"
-
   field_option_two_destructive:
     name: "2️⃣ Option 2 - Destructive"
-    default: !input dismiss_is_destructive
+    default: false
     selector:
       boolean:
-
   field_option_two_authentication_required:
     name: "2️⃣ Option 2 - Authentication Required"
-    default: !input dismiss_authentication_required
+    default: false
     selector:
       boolean:
 
   field_option_three_enabled:
     name: "3️⃣ Option 3 - Enabled"
-    default: !input option_three_enabled
+    default: false
     selector:
       boolean:
-
   field_option_three_title:
     name: "3️⃣ Option 3 - Title"
     default: !input option_three_text
     selector:
       text:
-
   field_option_three_mode:
     name: "3️⃣ Option 3 - Mode"
     default: !input option_three_option_mode
@@ -579,9 +507,8 @@ fields:
             value: ""
           - label: Action(s)
             value: action
-          - label: Link (🤖 Android Only)
+          - label: "Link (🤖 Android Only)"
             value: uri
-
   field_option_three_script:
     name: "3️⃣ Option 3 - Callback Script"
     default: !input option_three_action_script
@@ -589,52 +516,45 @@ fields:
       entity:
         filter:
           - domain: script
-
   field_option_three_uri:
     name: "3️⃣ Option 3 - Link"
     default: !input option_three_uri
     selector:
       text:
         type: url
-
   field_option_three_icon:
     name: "3️⃣ Option 3 - Icon"
     default: !input option_three_icon
     selector:
       text:
         prefix: "sfsymbols:"
-
   field_option_three_destructive:
     name: "3️⃣ Option 3 - Destructive"
-    default: !input option_three_is_destructive
+    default: false
     selector:
       boolean:
-
   field_option_three_authentication_required:
     name: "3️⃣ Option 3 - Authentication Required"
-    default: !input option_three_authentication_required
+    default: false
     selector:
       boolean:
 
   field_enable_timeout:
     name: "⌛️ Enable Timeout"
-    default: !input enable_timeout
+    default: false
     selector:
       boolean:
-
   field_timeout:
     name: "⌛️ Timeout Duration"
     default: !input timeout
     selector:
       duration:
         enable_day: false
-
   field_run_timeout_actions:
     name: "⌛️ Enable Timeout Action(s)"
-    default: !input run_timeout_actions
+    default: false
     selector:
       boolean:
-
   field_timeout_script:
     name: "⌛️ Timeout Callback Script"
     default: !input timeout_action_script
@@ -642,22 +562,19 @@ fields:
       entity:
         filter:
           - domain: script
-
   field_swipe_away_as_timeout:
     name: "⌛️ Run timeout action(s) when notification cleared"
-    default: !input swipe_away_as_timeout
+    default: false
     selector:
       boolean:
-
   field_clear_on_timeout:
     name: "🧹 Clear notification on timeout"
-    default: !input clear_on_timeout
+    default: false
     selector:
       boolean:
-
   field_persist:
     name: "🚩 Persistent Notification"
-    default: !input persist
+    default: false
     selector:
       boolean:
 
@@ -666,7 +583,6 @@ fields:
     default: !input notification_link
     selector:
       text:
-
   field_attachment_type:
     name: "📸 Attachment Type"
     default: !input attachment_type
@@ -677,7 +593,6 @@ fields:
             value: none
           - label: Camera
             value: camera_entity
-
   field_attachment_camera_entity:
     name: "📸 Attachment: Camera Entity"
     default: !input attachment_camera_entity
@@ -685,31 +600,26 @@ fields:
       entity:
         filter:
           - domain: camera
-
   field_car_ui:
     name: "🚘 Show on Android Auto"
-    default: !input car_ui
+    default: false
     selector:
       boolean:
-
   field_tag:
     name: "🔖 Tag"
     default: !input tag
     selector:
       text:
-
   field_group:
     name: "📣 Notification Group ID"
     default: !input group
     selector:
       text:
-
   field_channel:
     name: "📣 Notification Channel"
     default: !input channel
     selector:
       text:
-
   field_importance:
     name: "❕ Notification Channel Importance"
     default: !input importance
@@ -724,13 +634,11 @@ fields:
             value: low
           - label: Low
             value: min
-
   field_android_high_priority:
     name: "❕ High Priority Mode"
-    default: !input android_high_priority
+    default: false
     selector:
       boolean:
-
   field_interruption_level:
     name: "❕ Interruption Level"
     default: !input interruption_level
@@ -745,7 +653,6 @@ fields:
             value: time-sensitive
           - label: Critical
             value: critical
-
   field_visibility:
     name: "🔏 Notification Lockscreen Visibility"
     default: !input visibility
@@ -958,17 +865,13 @@ sequence:
         {{ enable_timeout or option_one_enabled or option_two_enabled or option_three_enabled }}
 
   - alias: Wait for response
+    variables:
+      wait_trigger: null
     choose:
-      - alias: No response required
-        conditions:
-          - condition: template
-            value_template: "{{ not expect_response }}"
-        sequence: []
-
       - alias: Wait with timeout
         conditions:
           - condition: template
-            value_template: "{{ enable_timeout }}"
+            value_template: "{{ expect_response and enable_timeout }}"
         sequence:
           - wait_for_trigger:
               - platform: event
@@ -989,11 +892,13 @@ sequence:
                   tag: "{{ tag }}"
             timeout: "{{ timeout }}"
             continue_on_timeout: true
+          - variables:
+              wait_trigger: "{{ wait.trigger }}"
 
       - alias: Wait indefinitely
         conditions:
           - condition: template
-            value_template: "{{ not enable_timeout }}"
+            value_template: "{{ expect_response and not enable_timeout }}"
         sequence:
           - wait_for_trigger:
               - platform: event
@@ -1012,25 +917,27 @@ sequence:
                 event_type: mobile_app_notification_cleared
                 event_data:
                   tag: "{{ tag }}"
+          - variables:
+              wait_trigger: "{{ wait.trigger }}"
 
   - alias: Parse response
     variables:
       user_response: >-
         {% set result = 'no_response' %}
         {% if expect_response %}
-          {% if wait.trigger is none %}
+          {% if wait_trigger is none %}
             {% set result = 'timeout' %}
-          {% elif wait.trigger.event.event_type == 'mobile_app_notification_cleared' and swipe_away_as_timeout %}
+          {% elif wait_trigger.event.event_type == 'mobile_app_notification_cleared' and swipe_away_as_timeout %}
             {% set result = 'notification_cleared' %}
-          {% elif wait.trigger.event.data.action == first_option %}
+          {% elif wait_trigger.event.data.action == first_option %}
             {% set result = 'option_one' %}
-          {% elif wait.trigger.event.data.action == second_option %}
+          {% elif wait_trigger.event.data.action == second_option %}
             {% set result = 'option_two' %}
-          {% elif wait.trigger.event.data.action == third_option %}
+          {% elif wait_trigger.event.data.action == third_option %}
             {% set result = 'option_three' %}
           {% endif %}
         {% endif %}
-        {{ {'result': result, 'trigger': wait.trigger} }}
+        {{ {'result': result, 'trigger': wait_trigger} }}
 
   # --------------------------------------------------------------------------
   # Runtime callback execution.
@@ -1049,12 +956,9 @@ sequence:
                  and run_timeout_actions
                  and timeout_script | length > 0 }}
         sequence:
-          - action: script.turn_on
-            target:
-              entity_id: "{{ timeout_script }}"
+          - action: "{{ timeout_script }}"
             data:
-              variables:
-                notification_response: "{{ user_response }}"
+              notification_response: "{{ user_response }}"
 
   - alias: Run option 1 callback
     choose:
@@ -1062,12 +966,9 @@ sequence:
           - condition: template
             value_template: "{{ user_response.result == 'option_one' and option_one_script | length > 0 }}"
         sequence:
-          - action: script.turn_on
-            target:
-              entity_id: "{{ option_one_script }}"
+          - action: "{{ option_one_script }}"
             data:
-              variables:
-                notification_response: "{{ user_response }}"
+              notification_response: "{{ user_response }}"
 
   - alias: Run option 2 callback
     choose:
@@ -1075,12 +976,9 @@ sequence:
           - condition: template
             value_template: "{{ user_response.result == 'option_two' and option_two_script | length > 0 }}"
         sequence:
-          - action: script.turn_on
-            target:
-              entity_id: "{{ option_two_script }}"
+          - action: "{{ option_two_script }}"
             data:
-              variables:
-                notification_response: "{{ user_response }}"
+              notification_response: "{{ user_response }}"
 
   - alias: Run option 3 callback
     choose:
@@ -1088,12 +986,9 @@ sequence:
           - condition: template
             value_template: "{{ user_response.result == 'option_three' and option_three_script | length > 0 }}"
         sequence:
-          - action: script.turn_on
-            target:
-              entity_id: "{{ option_three_script }}"
+          - action: "{{ option_three_script }}"
             data:
-              variables:
-                notification_response: "{{ user_response }}"
+              notification_response: "{{ user_response }}"
 
   - alias: Clear notification after timeout
     if:
