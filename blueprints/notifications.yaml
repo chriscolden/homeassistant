@@ -826,7 +826,7 @@ sequence:
 
       timeout_script: "{{ field_timeout_script }}"
       timeout_seconds: >-
-        {{ (timeout.hours * 60 + timeout.minutes) * 60 + timeout.seconds }}
+        {{ as_timedelta(timeout).total_seconds() | int }}
 
   - alias: Build notification identifiers
     variables:
