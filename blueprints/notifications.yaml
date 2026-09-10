@@ -24,7 +24,6 @@ fields:
     name: "🏷️ Title"
     description: "The title of the notification. Optional."
     required: false
-    default: ""
     selector:
       text:
   field_subtitle:
