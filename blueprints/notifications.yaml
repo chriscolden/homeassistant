@@ -30,21 +30,18 @@ fields:
     name: "🏷️ Subtitle"
     description: "The subtitle of the notification. Optional."
     required: false
-    default: ""
     selector:
       text:
   field_message:
     name: "💬 Message"
     description: "The message body to display on the notification. Android supports HTML formatting."
     required: false
-    default: ""
     selector:
       text:
   field_icon:
     name: "🙂 Icon"
     description: "Custom icon for this notification. Android only, optional."
     required: false
-    default: ""
     selector:
       icon:
   field_enable_icon_color:
@@ -66,21 +63,18 @@ fields:
     name: "1️⃣ Option 1 - Enabled"
     description: "Show or hide this option."
     required: false
-    default: false
     selector:
       boolean:
   field_option_one_title:
     name: "1️⃣ Option 1 - Title"
     description: "Title to show on the first option."
     required: false
-    default: "Option 1"
     selector:
       text:
   field_option_one_mode:
     name: "1️⃣ Option 1 - Mode"
     description: "Action mode for this option. Android can use either a Home Assistant action or a link; iOS can use both. Optional."
     required: false
-    default: ""
     selector:
       select:
         mode: dropdown
@@ -95,7 +89,6 @@ fields:
     name: "1️⃣ Option 1 - Callback Script"
     description: "Script to run when Option 1 is selected. The script receives the notification response as `notification_response`. Optional."
     required: false
-    default: ""
     selector:
       entity:
         filter:
@@ -104,7 +97,6 @@ fields:
     name: "1️⃣ Option 1 - Link"
     description: "Navigate to a link or app when this option is selected. Android: used with Mode: Link. iOS: leave empty to disable. Optional."
     required: false
-    default: ""
     selector:
       text:
         type: url
@@ -112,7 +104,6 @@ fields:
     name: "1️⃣ Option 1 - Icon"
     description: "Custom icon to show on this option. iOS only, optional."
     required: false
-    default: ""
     selector:
       text:
         prefix: "sfsymbols:"
@@ -120,14 +111,12 @@ fields:
     name: "1️⃣ Option 1 - Destructive"
     description: "Set the action's title to be red, indicating a destructive action. iOS only, optional."
     required: false
-    default: false
     selector:
       boolean:
   field_option_one_authentication_required:
     name: "1️⃣ Option 1 - Authentication Required"
     description: "Require the device to be unlocked to use this option. iOS only, optional."
     required: false
-    default: false
     selector:
       boolean:
 
@@ -135,21 +124,18 @@ fields:
     name: "2️⃣ Option 2 - Enabled"
     description: "Show or hide this option."
     required: false
-    default: false
     selector:
       boolean:
   field_option_two_title:
     name: "2️⃣ Option 2 - Title"
     description: "Title to show on the second option."
     required: false
-    default: "Option 2"
     selector:
       text:
   field_option_two_mode:
     name: "2️⃣ Option 2 - Mode"
     description: "Action mode for this option. Android can use either a Home Assistant action or a link; iOS can use both. Optional."
     required: false
-    default: ""
     selector:
       select:
         mode: dropdown
@@ -164,7 +150,6 @@ fields:
     name: "2️⃣ Option 2 - Callback Script"
     description: "Script to run when Option 2 is selected. The script receives the notification response as `notification_response`. Optional."
     required: false
-    default: ""
     selector:
       entity:
         filter:
@@ -173,7 +158,6 @@ fields:
     name: "2️⃣ Option 2 - Link"
     description: "Navigate to a link or app when this option is selected. Android: used with Mode: Link. iOS: leave empty to disable. Optional."
     required: false
-    default: ""
     selector:
       text:
         type: url
@@ -181,7 +165,6 @@ fields:
     name: "2️⃣ Option 2 - Icon"
     description: "Custom icon to show on this option. iOS only, optional."
     required: false
-    default: ""
     selector:
       text:
         prefix: "sfsymbols:"
@@ -189,36 +172,30 @@ fields:
     name: "2️⃣ Option 2 - Destructive"
     description: "Set the action's title to be red, indicating a destructive action. iOS only, optional."
     required: false
-    default: false
     selector:
       boolean:
   field_option_two_authentication_required:
     name: "2️⃣ Option 2 - Authentication Required"
     description: "Require the device to be unlocked to use this option. iOS only, optional."
     required: false
-    default: false
     selector:
       boolean:
-
   field_option_three_enabled:
     name: "3️⃣ Option 3 - Enabled"
     description: "Show or hide this option."
     required: false
-    default: false
     selector:
       boolean:
   field_option_three_title:
     name: "3️⃣ Option 3 - Title"
     description: "Title to show on the third option."
     required: false
-    default: "Option 3"
     selector:
       text:
   field_option_three_mode:
     name: "3️⃣ Option 3 - Mode"
     description: "Action mode for this option. Android can use either a Home Assistant action or a link; iOS can use both. Optional."
     required: false
-    default: ""
     selector:
       select:
         mode: dropdown
@@ -233,7 +210,6 @@ fields:
     name: "3️⃣ Option 3 - Callback Script"
     description: "Script to run when Option 3 is selected. The script receives the notification response as `notification_response`. Optional."
     required: false
-    default: ""
     selector:
       entity:
         filter:
@@ -242,7 +218,6 @@ fields:
     name: "3️⃣ Option 3 - Link"
     description: "Navigate to a link or app when this option is selected. Android: used with Mode: Link. iOS: leave empty to disable. Optional."
     required: false
-    default: ""
     selector:
       text:
         type: url
@@ -250,7 +225,6 @@ fields:
     name: "3️⃣ Option 3 - Icon"
     description: "Custom icon to show on this option. iOS only, optional."
     required: false
-    default: ""
     selector:
       text:
         prefix: "sfsymbols:"
@@ -258,14 +232,12 @@ fields:
     name: "3️⃣ Option 3 - Destructive"
     description: "Set the action's title to be red, indicating a destructive action. iOS only, optional."
     required: false
-    default: false
     selector:
       boolean:
   field_option_three_authentication_required:
     name: "3️⃣ Option 3 - Authentication Required"
     description: "Require the device to be unlocked to use this option. iOS only, optional."
     required: false
-    default: false
     selector:
       boolean:
 
@@ -273,17 +245,12 @@ fields:
     name: "⌛️ Enable Timeout"
     description: "Require the script to stop listening after the set duration. If disabled, the script waits for a response indefinitely until triggered again."
     required: false
-    default: false
     selector:
       boolean:
   field_timeout:
     name: "⌛️ Timeout Duration"
     description: "Amount of time to wait for an action response before firing the timeout callback. Default: 15 minutes."
     required: false
-    default:
-      hours: 0
-      minutes: 15
-      seconds: 0
     selector:
       duration:
         enable_day: false
@@ -291,14 +258,12 @@ fields:
     name: "⌛️ Enable Timeout Action(s)"
     description: "Run the timeout callback when a timeout event occurs. If disabled, the script times out without executing the callback."
     required: false
-    default: false
     selector:
       boolean:
   field_timeout_script:
     name: "⌛️ Timeout Callback Script"
     description: "Script to run when the notification response times out or the notification is cleared as a timeout. The script receives the notification response as `notification_response`. Optional."
     required: false
-    default: ""
     selector:
       entity:
         filter:
@@ -307,36 +272,30 @@ fields:
     name: "⌛️ Run timeout action(s) when notification cleared"
     description: "If enabled, swiping the notification away immediately triggers the timeout callback. Android only."
     required: false
-    default: false
     selector:
       boolean:
   field_clear_on_timeout:
     name: "🧹 Clear notification on timeout"
     description: "Dismiss the notification after the action response times out."
     required: false
-    default: false
     selector:
       boolean:
   field_persist:
     name: "🚩 Persistent Notification"
     description: "Prevents notifications from being swiped away accidentally. Android only. This blocks using notification clearing as a timeout trigger."
     required: false
-    default: false
     selector:
       boolean:
-
   field_notification_link:
     name: "🔗 Notification Link"
     description: "Custom link to open when the notification is selected. Optional."
     required: false
-    default: ""
     selector:
       text:
   field_attachment_type:
     name: "📸 Attachment Type"
     description: "Select whether to attach no media or a camera snapshot."
     required: false
-    default: "none"
     selector:
       select:
         options:
@@ -348,7 +307,6 @@ fields:
     name: "📸 Attachment: Camera Entity"
     description: "Camera entity to use for the notification attachment. Used when Attachment Type is Camera. Optional."
     required: false
-    default: ""
     selector:
       entity:
         filter:
@@ -357,21 +315,18 @@ fields:
     name: "🚘 Show on Android Auto"
     description: "Show the notification on Android Auto. Android only."
     required: false
-    default: false
     selector:
       boolean:
   field_tag:
     name: "🔖 Tag"
     description: "Notification tag used to identify and clear this notification. Optional."
     required: false
-    default: ""
     selector:
       text:
   field_group:
     name: "📣 Notification Group ID"
     description: "Notification group ID used to group related notifications. Optional."
     required: false
-    default: ""
     selector:
       text:
   field_channel:
@@ -385,7 +340,6 @@ fields:
     name: "❕ Notification Channel Importance"
     description: "Android notification channel importance."
     required: false
-    default: "default"
     selector:
       select:
         options:
@@ -401,14 +355,12 @@ fields:
     name: "❕ High Priority Mode"
     description: "Use high-priority Android notification delivery."
     required: false
-    default: false
     selector:
       boolean:
   field_interruption_level:
     name: "❕ Interruption Level"
     description: "iOS notification interruption level."
     required: false
-    default: "active"
     selector:
       select:
         options:
@@ -424,7 +376,6 @@ fields:
     name: "🔏 Notification Lockscreen Visibility"
     description: "Android lockscreen visibility for the notification."
     required: false
-    default: "private"
     selector:
       select:
         options:
@@ -442,65 +393,65 @@ sequence:
   - alias: Prepare derived values
     variables:
       notify_device: "{{ field_notify_device }}"
-      title: "{{ field_title }}"
-      subtitle: "{{ field_subtitle }}"
-      message: "{{ field_message }}"
-      notification_icon: "{{ field_icon }}"
-      enable_icon_color: "{{ field_enable_icon_color }}"
-      icon_color: "{{ field_icon_color }}"
+      title: "{{ field_title | default('', true) }}"
+      subtitle: "{{ field_subtitle | default('', true) }}"
+      message: "{{ field_message | default('', true) }}"
+      notification_icon: "{{ field_icon | default('', true) }}"
+      enable_icon_color: "{{ field_enable_icon_color | default(false, true) }}"
+      icon_color: "{{ field_icon_color | default([102, 186, 240], true) }}"
       icon_color_hex: >-
         {{ '#{:02x}{:02x}{:02x}'.format(
           icon_color[0], icon_color[1], icon_color[2]
         ) }}
 
-      notification_link: "{{ field_notification_link }}"
-      tag_input: "{{ field_tag }}"
-      group: "{{ field_group }}"
-      channel: "{{ field_channel }}"
-      importance: "{{ field_importance }}"
-      android_high_priority: "{{ field_android_high_priority }}"
-      interruption_level: "{{ field_interruption_level }}"
-      visibility: "{{ field_visibility }}"
-      persist: "{{ field_persist }}"
-      car_ui: "{{ field_car_ui }}"
+      notification_link: "{{ field_notification_link | default('', true) }}"
+      tag_input: "{{ field_tag | default('', true) }}"
+      group: "{{ field_group | default('', true) }}"
+      channel: "{{ field_channel | default('General', true) }}"
+      importance: "{{ field_importance | default('default', true) }}"
+      android_high_priority: "{{ field_android_high_priority | default(false, true) }}"
+      interruption_level: "{{ field_interruption_level | default('active', true) }}"
+      visibility: "{{ field_visibility | default('private', true) }}"
+      persist: "{{ field_persist | default(false, true) }}"
+      car_ui: "{{ field_car_ui | default(false, true) }}"
 
-      attachment_type: "{{ field_attachment_type }}"
-      attachment_camera_entity: "{{ field_attachment_camera_entity }}"
+      attachment_type: "{{ field_attachment_type | default('none', true) }}"
+      attachment_camera_entity: "{{ field_attachment_camera_entity | default('', true) }}"
 
-      enable_timeout: "{{ field_enable_timeout }}"
-      timeout: "{{ field_timeout }}"
-      run_timeout_actions: "{{ field_run_timeout_actions }}"
-      swipe_away_as_timeout: "{{ field_swipe_away_as_timeout }}"
-      clear_on_timeout: "{{ field_clear_on_timeout }}"
+      enable_timeout: "{{ field_enable_timeout | default(false, true) }}"
+      timeout: "{{ field_timeout | default('00:15:00', true) }}"
+      run_timeout_actions: "{{ field_run_timeout_actions | default(false, true) }}"
+      swipe_away_as_timeout: "{{ field_swipe_away_as_timeout | default(false, true) }}"
+      clear_on_timeout: "{{ field_clear_on_timeout | default(false, true) }}"
 
-      option_one_enabled: "{{ field_option_one_enabled }}"
-      option_one_title: "{{ field_option_one_title }}"
-      option_one_mode: "{{ field_option_one_mode }}"
-      option_one_script: "{{ field_option_one_script }}"
-      option_one_uri: "{{ field_option_one_uri }}"
-      option_one_icon_value: "{{ field_option_one_icon }}"
-      option_one_destructive: "{{ field_option_one_destructive }}"
-      option_one_authentication_required: "{{ field_option_one_authentication_required }}"
+      option_one_enabled: "{{ field_option_one_enabled | default(false, true) }}"
+      option_one_title: "{{ field_option_one_title | default('Option 1', true) }}"
+      option_one_mode: "{{ field_option_one_mode | default('action', true) }}"
+      option_one_script: "{{ field_option_one_script | default('', true) }}"
+      option_one_uri: "{{ field_option_one_uri | default('', true) }}"
+      option_one_icon_value: "{{ field_option_one_icon | default('', true) }}"
+      option_one_destructive: "{{ field_option_one_destructive | default(false, true) }}"
+      option_one_authentication_required: "{{ field_option_one_authentication_required | default(false, true) }}"
 
-      option_two_enabled: "{{ field_option_two_enabled }}"
-      option_two_title: "{{ field_option_two_title }}"
-      option_two_mode: "{{ field_option_two_mode }}"
-      option_two_script: "{{ field_option_two_script }}"
-      option_two_uri: "{{ field_option_two_uri }}"
-      option_two_icon_value: "{{ field_option_two_icon }}"
-      option_two_destructive: "{{ field_option_two_destructive }}"
-      option_two_authentication_required: "{{ field_option_two_authentication_required }}"
+      option_two_enabled: "{{ field_option_two_enabled | default(false, true) }}"
+      option_two_title: "{{ field_option_two_title | default('Option 2', true) }}"
+      option_two_mode: "{{ field_option_two_mode | default('action', true) }}"
+      option_two_script: "{{ field_option_two_script | default('', true) }}"
+      option_two_uri: "{{ field_option_two_uri | default('', true) }}"
+      option_two_icon_value: "{{ field_option_two_icon | default('', true) }}"
+      option_two_destructive: "{{ field_option_two_destructive | default(false, true) }}"
+      option_two_authentication_required: "{{ field_option_two_authentication_required | default(false, true) }}"
 
-      option_three_enabled: "{{ field_option_three_enabled }}"
-      option_three_title: "{{ field_option_three_title }}"
-      option_three_mode: "{{ field_option_three_mode }}"
-      option_three_script: "{{ field_option_three_script }}"
-      option_three_uri: "{{ field_option_three_uri }}"
-      option_three_icon_value: "{{ field_option_three_icon }}"
-      option_three_destructive: "{{ field_option_three_destructive }}"
-      option_three_authentication_required: "{{ field_option_three_authentication_required }}"
+      option_three_enabled: "{{ field_option_three_enabled | default(false, true) }}"
+      option_three_title: "{{ field_option_three_title | default('Option 3', true) }}"
+      option_three_mode: "{{ field_option_three_mode | default('action', true) }}"
+      option_three_script: "{{ field_option_three_script | default('', true) }}"
+      option_three_uri: "{{ field_option_three_uri | default('', true) }}"
+      option_three_icon_value: "{{ field_option_three_icon | default('', true) }}"
+      option_three_destructive: "{{ field_option_three_destructive | default(false, true) }}"
+      option_three_authentication_required: "{{ field_option_three_authentication_required | default(false, true) }}"
 
-      timeout_script: "{{ field_timeout_script }}"
+      timeout_script: "{{ field_timeout_script | default('', true) }}"
       timeout_seconds: >-
         {{ as_timedelta(timeout).total_seconds() | int }}
 
