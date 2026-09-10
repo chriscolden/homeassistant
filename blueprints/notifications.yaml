@@ -421,7 +421,7 @@ sequence:
       clear_on_timeout: "{{ field_clear_on_timeout | default(false, true) }}"
 
       option_one_enabled: "{{ field_option_one_enabled | default(false, true) }}"
-      option_one_title: "{{ field_option_one_title | default('Option 1', true) }}"
+      option_one_title: "{{ field_option_one_title | default('Option 1', true) | string }}"
       option_one_mode: "{{ field_option_one_mode | default('action', true) }}"
       option_one_script: "{{ field_option_one_script | default('', true) }}"
       option_one_uri: "{{ field_option_one_uri | default('', true) }}"
@@ -430,7 +430,7 @@ sequence:
       option_one_authentication_required: "{{ field_option_one_authentication_required | default(false, true) }}"
 
       option_two_enabled: "{{ field_option_two_enabled | default(false, true) }}"
-      option_two_title: "{{ field_option_two_title | default('Option 2', true) }}"
+      option_two_title: "{{ field_option_two_title | default('Option 2', true) | string }}"
       option_two_mode: "{{ field_option_two_mode | default('action', true) }}"
       option_two_script: "{{ field_option_two_script | default('', true) }}"
       option_two_uri: "{{ field_option_two_uri | default('', true) }}"
@@ -439,7 +439,7 @@ sequence:
       option_two_authentication_required: "{{ field_option_two_authentication_required | default(false, true) }}"
 
       option_three_enabled: "{{ field_option_three_enabled | default(false, true) }}"
-      option_three_title: "{{ field_option_three_title | default('Option 3', true) }}"
+      option_three_title: "{{ field_option_three_title | default('Option 3', true) | string }}"
       option_three_mode: "{{ field_option_three_mode | default('action', true) }}"
       option_three_script: "{{ field_option_three_script | default('', true) }}"
       option_three_uri: "{{ field_option_three_uri | default('', true) }}"
@@ -484,7 +484,7 @@ sequence:
         {{ {
           'enabled': option_one_enabled,
           'action': option_one_action,
-          'title': option_one_title,
+          'title': option_one_title | string,
           'icon': option_one_icon,
           'destructive': option_one_destructive,
           'authenticationRequired': option_one_authentication_required,
@@ -494,7 +494,7 @@ sequence:
         {{ {
           'enabled': option_two_enabled,
           'action': option_two_action,
-          'title': option_two_title,
+          'title': option_two_title | string,
           'icon': option_two_icon,
           'destructive': option_two_destructive,
           'authenticationRequired': option_two_authentication_required,
@@ -504,7 +504,7 @@ sequence:
         {{ {
           'enabled': option_three_enabled,
           'action': option_three_action,
-          'title': option_three_title,
+          'title': option_three_title | string,
           'icon': option_three_icon,
           'destructive': option_three_destructive,
           'authenticationRequired': option_three_authentication_required,
@@ -580,6 +580,10 @@ sequence:
       expect_response: >-
         {{ enable_timeout or option_one_enabled or option_two_enabled or option_three_enabled }}
 
+  - alias: Initialize response trigger
+    variables:
+      wait_trigger: null
+
   - alias: Wait for response
     choose:
       - alias: Wait with timeout
@@ -634,17 +638,16 @@ sequence:
     variables:
       user_response: >-
         {% set result = 'no_response' %}
-        {% set response_trigger = wait.trigger %}
         {% if expect_response %}
-          {% if response_trigger is none %}
+          {% if wait.trigger is none %}
             {% set result = 'timeout' %}
-          {% elif response_trigger.event.event_type == 'mobile_app_notification_cleared' and swipe_away_as_timeout %}
+          {% elif wait.trigger.event.event_type == 'mobile_app_notification_cleared' and swipe_away_as_timeout %}
             {% set result = 'notification_cleared' %}
-          {% elif response_trigger.event.data.action | default('') == first_option %}
+          {% elif wait.trigger.event.data.action | default('') == first_option %}
             {% set result = 'option_one' %}
-          {% elif response_trigger.event.data.action | default('') == second_option %}
+          {% elif wait.trigger.event.data.action | default('') == second_option %}
             {% set result = 'option_two' %}
-          {% elif response_trigger.event.data.action | default('') == third_option %}
+          {% elif wait.trigger.event.data.action | default('') == third_option %}
             {% set result = 'option_three' %}
           {% endif %}
         {% endif %}
