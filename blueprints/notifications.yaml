@@ -1,10 +1,9 @@
 mode: restart
 blueprint:
-  name: 🔔 Notifications (Version 2.2.0 - Fields)
+  name: 🔔 Notifications
   description: >-
     Actionable mobile notification script for Home Assistant Companion.
-    All configurable values are exposed as script fields and copied into runtime
-    variables. Response callbacks use selectable script entities so field-provided
+    All configurable values are exposed directly as script fields and used at runtime. Response callbacks use selectable script entities so field-provided
     callbacks can be executed without templating a dynamic choose.sequence.
   domain: script
   source_url: https://github.com/chriscolden/homeassistant/blob/main/blueprints/notifications.yaml
@@ -12,359 +11,12 @@ blueprint:
   homeassistant:
     min_version: 2024.6.0
 
-  input:
-    notify_device:
-      name: "📲 Device to notify"
-      default: ""
-      selector:
-        device:
-          filter:
-            - integration: mobile_app
-
-    title:
-      name: "🏷️ Title"
-      default: ""
-      selector:
-        text:
-    subtitle:
-      name: "🏷️ Subtitle"
-      default: ""
-      selector:
-        text:
-    message:
-      name: "💬 Message"
-      default: ""
-      selector:
-        text:
-    icon:
-      name: "🙂 Icon"
-      default: ""
-      selector:
-        icon:
-    enable_icon_color:
-      name: "🎨 Use Icon Color"
-      default: false
-      selector:
-        boolean:
-    icon_color:
-      name: "🎨 Icon Color"
-      default: [102, 186, 240]
-      selector:
-        color_rgb:
-
-    option_one:
-      name: "1️⃣ Option 1"
-      icon: mdi:numeric-1-circle
-      description: Configure the first notification action.
-      collapsed: true
-      input:
-        confirm_enabled:
-          name: "1️⃣ Option 1"
-          default: false
-          selector:
-            boolean:
-        confirm_text:
-          name: "1️⃣ Option 1 - Title"
-          default: "Option 1"
-          selector:
-            text:
-        confirm_option_mode:
-          name: "1️⃣ Option 1 - Mode"
-          default: ""
-          selector:
-            select:
-              mode: dropdown
-              options:
-                - label: ""
-                  value: ""
-                - label: Action(s)
-                  value: action
-                - label: "Link (🤖 Android Only)"
-                  value: uri
-        confirm_action_script:
-          name: "1️⃣ Option 1 - Callback Script"
-          default: ""
-          selector:
-            entity:
-              filter:
-                - domain: script
-        confirm_uri:
-          name: "1️⃣ Option 1 - Link"
-          default: ""
-          selector:
-            text:
-              type: url
-        confirm_icon:
-          name: "1️⃣ Option 1 - Icon"
-          default: ""
-          selector:
-            text:
-              prefix: "sfsymbols:"
-        confirm_is_destructive:
-          name: "1️⃣ Option 1 - Destructive"
-          default: false
-          selector:
-            boolean:
-        confirm_authentication_required:
-          name: "1️⃣ Option 1 - Authentication Required"
-          default: false
-          selector:
-            boolean:
-
-    option_two:
-      name: "2️⃣ Option 2"
-      icon: mdi:numeric-2-circle
-      description: Configure the second notification action.
-      collapsed: true
-      input:
-        dismiss_enabled:
-          name: "2️⃣ Option 2"
-          default: false
-          selector:
-            boolean:
-        dismiss_text:
-          name: "2️⃣ Option 2 - Title"
-          default: "Option 2"
-          selector:
-            text:
-        dismiss_option_mode:
-          name: "2️⃣ Option 2 - Mode"
-          default: ""
-          selector:
-            select:
-              mode: dropdown
-              options:
-                - label: ""
-                  value: ""
-                - label: Action(s)
-                  value: action
-                - label: "Link (🤖 Android Only)"
-                  value: uri
-        dismiss_action_script:
-          name: "2️⃣ Option 2 - Callback Script"
-          default: ""
-          selector:
-            entity:
-              filter:
-                - domain: script
-        dismiss_uri:
-          name: "2️⃣ Option 2 - Link"
-          default: ""
-          selector:
-            text:
-              type: url
-        dismiss_icon:
-          name: "2️⃣ Option 2 - Icon"
-          default: ""
-          selector:
-            text:
-              prefix: "sfsymbols:"
-        dismiss_is_destructive:
-          name: "2️⃣ Option 2 - Destructive"
-          default: false
-          selector:
-            boolean:
-        dismiss_authentication_required:
-          name: "2️⃣ Option 2 - Authentication Required"
-          default: false
-          selector:
-            boolean:
-
-    option_three:
-      name: "3️⃣ Option 3"
-      icon: mdi:numeric-3-circle
-      description: Configure the third notification action.
-      collapsed: true
-      input:
-        option_three_enabled:
-          name: "3️⃣ Option 3"
-          default: false
-          selector:
-            boolean:
-        option_three_text:
-          name: "3️⃣ Option 3 - Title"
-          default: "Option 3"
-          selector:
-            text:
-        option_three_option_mode:
-          name: "3️⃣ Option 3 - Mode"
-          default: ""
-          selector:
-            select:
-              mode: dropdown
-              options:
-                - label: ""
-                  value: ""
-                - label: Action(s)
-                  value: action
-                - label: "Link (🤖 Android Only)"
-                  value: uri
-        option_three_action_script:
-          name: "3️⃣ Option 3 - Callback Script"
-          default: ""
-          selector:
-            entity:
-              filter:
-                - domain: script
-        option_three_uri:
-          name: "3️⃣ Option 3 - Link"
-          default: ""
-          selector:
-            text:
-              type: url
-        option_three_icon:
-          name: "3️⃣ Option 3 - Icon"
-          default: ""
-          selector:
-            text:
-              prefix: "sfsymbols:"
-        option_three_is_destructive:
-          name: "3️⃣ Option 3 - Destructive"
-          default: false
-          selector:
-            boolean:
-        option_three_authentication_required:
-          name: "3️⃣ Option 3 - Authentication Required"
-          default: false
-          selector:
-            boolean:
-
-    enable_timeout:
-      name: "⌛️ Enable Timeout"
-      default: false
-      selector:
-        boolean:
-    timeout:
-      name: "⌛️ Timeout Duration"
-      default:
-        hours: 0
-        minutes: 15
-        seconds: 0
-      selector:
-        duration:
-          enable_day: false
-    run_timeout_actions:
-      name: "⌛️ Enable Timeout Action(s)"
-      default: false
-      selector:
-        boolean:
-    timeout_action_script:
-      name: "⌛️ Timeout Callback Script"
-      default: ""
-      selector:
-        entity:
-          filter:
-            - domain: script
-    swipe_away_as_timeout:
-      name: "⌛️ Run timeout action(s) when notification cleared"
-      default: false
-      selector:
-        boolean:
-    clear_on_timeout:
-      name: "🧹 Clear notification on timeout"
-      default: false
-      selector:
-        boolean:
-    persist:
-      name: "🚩 Persistent Notification"
-      default: false
-      selector:
-        boolean:
-
-    notification_link:
-      name: "🔗 Notification Link"
-      default: ""
-      selector:
-        text:
-    attachment_type:
-      name: "📸 Attachment Type"
-      default: "none"
-      selector:
-        select:
-          options:
-            - label: None
-              value: none
-            - label: Camera
-              value: camera_entity
-    attachment_camera_entity:
-      name: "📸 Attachment: Camera Entity"
-      default: ""
-      selector:
-        entity:
-          filter:
-            - domain: camera
-    car_ui:
-      name: "🚘 Show on Android Auto"
-      default: false
-      selector:
-        boolean:
-    tag:
-      name: "🔖 Tag"
-      default: ""
-      selector:
-        text:
-    group:
-      name: "📣 Notification Group ID"
-      default: ""
-      selector:
-        text:
-    channel:
-      name: "📣 Notification Channel"
-      default: General
-      selector:
-        text:
-    importance:
-      name: "❕ Notification Channel Importance"
-      default: default
-      selector:
-        select:
-          options:
-            - label: Urgent
-              value: high
-            - label: Default
-              value: default
-            - label: Silent
-              value: low
-            - label: Low
-              value: min
-    android_high_priority:
-      name: "❕ High Priority Mode"
-      default: false
-      selector:
-        boolean:
-    interruption_level:
-      name: "❕ Interruption Level"
-      default: active
-      selector:
-        select:
-          options:
-            - label: Silent
-              value: passive
-            - label: Default
-              value: active
-            - label: Important
-              value: time-sensitive
-            - label: Critical
-              value: critical
-    visibility:
-      name: "🔏 Notification Lockscreen Visibility"
-      default: private
-      selector:
-        select:
-          options:
-            - label: Public
-              value: public
-            - label: Private
-              value: private
-            - label: Secret
-              value: secret
-
 fields:
   field_notify_device:
     name: "📲 Device to notify"
     description: "Device needs to run the official Home Assistant Companion app to receive notifications."
     required: false
-    default: !input notify_device
+    default: ""
     selector:
       device:
         filter:
@@ -373,28 +25,28 @@ fields:
     name: "🏷️ Title"
     description: "The title of the notification. Optional."
     required: false
-    default: !input title
+    default: ""
     selector:
       text:
   field_subtitle:
     name: "🏷️ Subtitle"
     description: "The subtitle of the notification. Optional."
     required: false
-    default: !input subtitle
+    default: ""
     selector:
       text:
   field_message:
     name: "💬 Message"
     description: "The message body to display on the notification. Android supports HTML formatting."
     required: false
-    default: !input message
+    default: ""
     selector:
       text:
   field_icon:
     name: "🙂 Icon"
     description: "Custom icon for this notification. Android only, optional."
     required: false
-    default: !input icon
+    default: ""
     selector:
       icon:
   field_enable_icon_color:
@@ -408,7 +60,7 @@ fields:
     name: "🎨 Icon Color"
     description: "Custom icon color for this notification. Android only, optional."
     required: false
-    default: !input icon_color
+    default: [102, 186, 240]
     selector:
       color_rgb:
 
@@ -423,14 +75,14 @@ fields:
     name: "1️⃣ Option 1 - Title"
     description: "Title to show on the first option."
     required: false
-    default: !input confirm_text
+    default: "Option 1"
     selector:
       text:
   field_option_one_mode:
     name: "1️⃣ Option 1 - Mode"
     description: "Action mode for this option. Android can use either a Home Assistant action or a link; iOS can use both. Optional."
     required: false
-    default: !input confirm_option_mode
+    default: ""
     selector:
       select:
         mode: dropdown
@@ -445,7 +97,7 @@ fields:
     name: "1️⃣ Option 1 - Callback Script"
     description: "Script to run when Option 1 is selected. The script receives the notification response as `notification_response`. Optional."
     required: false
-    default: !input confirm_action_script
+    default: ""
     selector:
       entity:
         filter:
@@ -454,7 +106,7 @@ fields:
     name: "1️⃣ Option 1 - Link"
     description: "Navigate to a link or app when this option is selected. Android: used with Mode: Link. iOS: leave empty to disable. Optional."
     required: false
-    default: !input confirm_uri
+    default: ""
     selector:
       text:
         type: url
@@ -462,7 +114,7 @@ fields:
     name: "1️⃣ Option 1 - Icon"
     description: "Custom icon to show on this option. iOS only, optional."
     required: false
-    default: !input confirm_icon
+    default: ""
     selector:
       text:
         prefix: "sfsymbols:"
@@ -492,14 +144,14 @@ fields:
     name: "2️⃣ Option 2 - Title"
     description: "Title to show on the second option."
     required: false
-    default: !input dismiss_text
+    default: "Option 2"
     selector:
       text:
   field_option_two_mode:
     name: "2️⃣ Option 2 - Mode"
     description: "Action mode for this option. Android can use either a Home Assistant action or a link; iOS can use both. Optional."
     required: false
-    default: !input dismiss_option_mode
+    default: ""
     selector:
       select:
         mode: dropdown
@@ -514,7 +166,7 @@ fields:
     name: "2️⃣ Option 2 - Callback Script"
     description: "Script to run when Option 2 is selected. The script receives the notification response as `notification_response`. Optional."
     required: false
-    default: !input dismiss_action_script
+    default: ""
     selector:
       entity:
         filter:
@@ -523,7 +175,7 @@ fields:
     name: "2️⃣ Option 2 - Link"
     description: "Navigate to a link or app when this option is selected. Android: used with Mode: Link. iOS: leave empty to disable. Optional."
     required: false
-    default: !input dismiss_uri
+    default: ""
     selector:
       text:
         type: url
@@ -531,7 +183,7 @@ fields:
     name: "2️⃣ Option 2 - Icon"
     description: "Custom icon to show on this option. iOS only, optional."
     required: false
-    default: !input dismiss_icon
+    default: ""
     selector:
       text:
         prefix: "sfsymbols:"
@@ -561,14 +213,14 @@ fields:
     name: "3️⃣ Option 3 - Title"
     description: "Title to show on the third option."
     required: false
-    default: !input option_three_text
+    default: "Option 3"
     selector:
       text:
   field_option_three_mode:
     name: "3️⃣ Option 3 - Mode"
     description: "Action mode for this option. Android can use either a Home Assistant action or a link; iOS can use both. Optional."
     required: false
-    default: !input option_three_option_mode
+    default: ""
     selector:
       select:
         mode: dropdown
@@ -583,7 +235,7 @@ fields:
     name: "3️⃣ Option 3 - Callback Script"
     description: "Script to run when Option 3 is selected. The script receives the notification response as `notification_response`. Optional."
     required: false
-    default: !input option_three_action_script
+    default: ""
     selector:
       entity:
         filter:
@@ -592,7 +244,7 @@ fields:
     name: "3️⃣ Option 3 - Link"
     description: "Navigate to a link or app when this option is selected. Android: used with Mode: Link. iOS: leave empty to disable. Optional."
     required: false
-    default: !input option_three_uri
+    default: ""
     selector:
       text:
         type: url
@@ -600,7 +252,7 @@ fields:
     name: "3️⃣ Option 3 - Icon"
     description: "Custom icon to show on this option. iOS only, optional."
     required: false
-    default: !input option_three_icon
+    default: ""
     selector:
       text:
         prefix: "sfsymbols:"
@@ -630,7 +282,10 @@ fields:
     name: "⌛️ Timeout Duration"
     description: "Amount of time to wait for an action response before firing the timeout callback. Default: 15 minutes."
     required: false
-    default: !input timeout
+    default:
+      hours: 0
+      minutes: 15
+      seconds: 0
     selector:
       duration:
         enable_day: false
@@ -645,7 +300,7 @@ fields:
     name: "⌛️ Timeout Callback Script"
     description: "Script to run when the notification response times out or the notification is cleared as a timeout. The script receives the notification response as `notification_response`. Optional."
     required: false
-    default: !input timeout_action_script
+    default: ""
     selector:
       entity:
         filter:
@@ -676,14 +331,14 @@ fields:
     name: "🔗 Notification Link"
     description: "Custom link to open when the notification is selected. Optional."
     required: false
-    default: !input notification_link
+    default: ""
     selector:
       text:
   field_attachment_type:
     name: "📸 Attachment Type"
     description: "Select whether to attach no media or a camera snapshot."
     required: false
-    default: !input attachment_type
+    default: "none"
     selector:
       select:
         options:
@@ -695,7 +350,7 @@ fields:
     name: "📸 Attachment: Camera Entity"
     description: "Camera entity to use for the notification attachment. Used when Attachment Type is Camera. Optional."
     required: false
-    default: !input attachment_camera_entity
+    default: ""
     selector:
       entity:
         filter:
@@ -711,28 +366,28 @@ fields:
     name: "🔖 Tag"
     description: "Notification tag used to identify and clear this notification. Optional."
     required: false
-    default: !input tag
+    default: ""
     selector:
       text:
   field_group:
     name: "📣 Notification Group ID"
     description: "Notification group ID used to group related notifications. Optional."
     required: false
-    default: !input group
+    default: ""
     selector:
       text:
   field_channel:
     name: "📣 Notification Channel"
     description: "Android notification channel name."
     required: false
-    default: !input channel
+    default: "General"
     selector:
       text:
   field_importance:
     name: "❕ Notification Channel Importance"
     description: "Android notification channel importance."
     required: false
-    default: !input importance
+    default: "default"
     selector:
       select:
         options:
@@ -755,7 +410,7 @@ fields:
     name: "❕ Interruption Level"
     description: "iOS notification interruption level."
     required: false
-    default: !input interruption_level
+    default: "active"
     selector:
       select:
         options:
@@ -771,7 +426,7 @@ fields:
     name: "🔏 Notification Lockscreen Visibility"
     description: "Android lockscreen visibility for the notification."
     required: false
-    default: !input visibility
+    default: "private"
     selector:
       select:
         options:
@@ -784,9 +439,9 @@ fields:
 
 sequence:
   # --------------------------------------------------------------------------
-  # Resolve every blueprint input through its corresponding script field.
+  # Resolve script fields into runtime variables and derived values.
   # --------------------------------------------------------------------------
-  - alias: Resolve fields into variables
+  - alias: Prepare derived values
     variables:
       notify_device: "{{ field_notify_device }}"
       title: "{{ field_title }}"
