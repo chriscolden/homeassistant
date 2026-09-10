@@ -547,6 +547,7 @@ sequence:
           {% set data.value = dict(data.value, **{'channel': channel}) %}
           {% set data.value = dict(data.value, **{'tag': tag}) %}
           {% set data.value = dict(data.value, **{'group': group}) %}
+          {% set data.value = dict(data.value, **{'icon': notification_icon}) if notification_icon | length else data.value %}
           {% if enable_icon_color %}
             {% set data.value = dict(data.value, **{'color': icon_color_hex}) %}
           {% endif %}
@@ -579,10 +580,6 @@ sequence:
       expect_response: >-
         {{ enable_timeout or option_one_enabled or option_two_enabled or option_three_enabled }}
 
-  - alias: Initialize response trigger
-    variables:
-      wait_trigger: null
-
   - alias: Wait for response
     choose:
       - alias: Wait with timeout
@@ -609,8 +606,6 @@ sequence:
                   tag: "{{ tag }}"
             timeout: "{{ timeout }}"
             continue_on_timeout: true
-          - variables:
-              wait_trigger: "{{ wait.trigger }}"
 
       - alias: Wait indefinitely
         conditions:
@@ -634,27 +629,26 @@ sequence:
                 event_type: mobile_app_notification_cleared
                 event_data:
                   tag: "{{ tag }}"
-          - variables:
-              wait_trigger: "{{ wait.trigger }}"
 
   - alias: Parse response
     variables:
       user_response: >-
         {% set result = 'no_response' %}
+        {% set response_trigger = wait.trigger %}
         {% if expect_response %}
-          {% if wait_trigger is none %}
+          {% if response_trigger is none %}
             {% set result = 'timeout' %}
-          {% elif wait_trigger.event.event_type == 'mobile_app_notification_cleared' and swipe_away_as_timeout %}
+          {% elif response_trigger.event.event_type == 'mobile_app_notification_cleared' and swipe_away_as_timeout %}
             {% set result = 'notification_cleared' %}
-          {% elif wait_trigger.event.data.action == first_option %}
+          {% elif response_trigger.event.data.action | default('') == first_option %}
             {% set result = 'option_one' %}
-          {% elif wait_trigger.event.data.action == second_option %}
+          {% elif response_trigger.event.data.action | default('') == second_option %}
             {% set result = 'option_two' %}
-          {% elif wait_trigger.event.data.action == third_option %}
+          {% elif response_trigger.event.data.action | default('') == third_option %}
             {% set result = 'option_three' %}
           {% endif %}
         {% endif %}
-        {{ {'result': result, 'trigger': wait_trigger} }}
+        {{ {'result': result} }}
 
   # --------------------------------------------------------------------------
   # Runtime callback execution.
