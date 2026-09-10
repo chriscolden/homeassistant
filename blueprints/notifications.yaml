@@ -48,17 +48,14 @@ fields:
     name: "🎨 Use Icon Color"
     description: "If disabled, uses the default icon color. Android only, optional."
     required: false
-    default: false
     selector:
       boolean:
   field_icon_color:
     name: "🎨 Icon Color"
     description: "Custom icon color for this notification. Android only, optional."
     required: false
-    default: [102, 186, 240]
     selector:
       color_rgb:
-
   field_option_one_enabled:
     name: "1️⃣ Option 1 - Enabled"
     description: "Show or hide this option."
@@ -333,7 +330,6 @@ fields:
     name: "📣 Notification Channel"
     description: "Android notification channel name."
     required: false
-    default: "General"
     selector:
       text:
   field_importance:
