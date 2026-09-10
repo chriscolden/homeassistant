@@ -547,7 +547,6 @@ sequence:
           {% set data.value = dict(data.value, **{'channel': channel}) %}
           {% set data.value = dict(data.value, **{'tag': tag}) %}
           {% set data.value = dict(data.value, **{'group': group}) %}
-          {% set data.value = dict(data.value, **{'icon': notification_icon}) if notification_icon | length else data.value %}
           {% if enable_icon_color %}
             {% set data.value = dict(data.value, **{'color': icon_color_hex}) %}
           {% endif %}
