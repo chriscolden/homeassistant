@@ -20,7 +20,6 @@ fields:
       device:
         filter:
           - integration: mobile_app
-        multiple: true
 
   field_notify_group:
     name: Notify group
