@@ -15,24 +15,11 @@ fields:
   field_notify_device:
     name: "📲 Device to notify"
     description: "Device needs to run the official Home Assistant Companion app to receive notifications."
-    required: false
+    required: true
     selector:
       device:
         filter:
           - integration: mobile_app
-
-  field_notify_group:
-    name: Notify group
-    description: Optional notify group to send the notification to. Used when no mobile device is selected.
-    required: false
-    selector:
-      entity:
-        domain: notify
-        multiple: true
-  filter:
-    - integration: hue
-      domain: binary_sensor
-      device_class: motion
   field_title:
     name: "🏷️ Title"
     description: "The title of the notification. Optional."
@@ -401,8 +388,7 @@ sequence:
   # --------------------------------------------------------------------------
   - alias: Prepare derived values
     variables:
-      notify_device: "{{ field_notify_device | default('', true) }}"
-      notify_group: "{{ field_notify_group | default('', true) }}"
+      notify_device: "{{ field_notify_device }}"
       title: "{{ field_title | default('', true) }}"
       subtitle: "{{ field_subtitle | default('', true) }}"
       message: "{{ field_message | default('', true) }}"
