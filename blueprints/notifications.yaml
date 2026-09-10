@@ -1,13 +1,16 @@
 mode: restart
 blueprint:
-  name: 🔔 Notifications
+  name: 🔔 Notifications (Version 2.2.0 - Fields)
   description: >-
     Actionable mobile notification script for Home Assistant Companion.
+    All configurable values are exposed as script fields and copied into runtime
+    variables. Response callbacks use selectable script entities so field-provided
+    callbacks can be executed without templating a dynamic choose.sequence.
   domain: script
   source_url: https://github.com/chriscolden/homeassistant/blob/main/blueprints/notifications.yaml
-  author: Chris Colden
+  author: chriscolden/homeassistant
   homeassistant:
-    min_version: 2023.11.0
+    min_version: 2024.6.0
 
   input:
     notify_device:
@@ -49,164 +52,182 @@ blueprint:
       selector:
         color_rgb:
 
-    confirm_enabled:
+    option_one:
       name: "1️⃣ Option 1"
-      default: false
-      selector:
-        boolean:
-    confirm_text:
-      name: "1️⃣ Option 1 - Title"
-      default: "Option 1"
-      selector:
-        text:
-    confirm_option_mode:
-      name: "1️⃣ Option 1 - Mode"
-      default: ""
-      selector:
-        select:
-          mode: dropdown
-          options:
-            - label: ""
-              value: ""
-            - label: Action(s)
-              value: action
-            - label: "Link (🤖 Android Only)"
-              value: uri
-    confirm_action_script:
-      name: "1️⃣ Option 1 - Callback Script"
-      default: ""
-      selector:
-        entity:
-          filter:
-            - domain: script
-    confirm_uri:
-      name: "1️⃣ Option 1 - Link"
-      default: ""
-      selector:
-        text:
-          type: url
-    confirm_icon:
-      name: "1️⃣ Option 1 - Icon"
-      default: ""
-      selector:
-        text:
-          prefix: "sfsymbols:"
-    confirm_is_destructive:
-      name: "1️⃣ Option 1 - Destructive"
-      default: false
-      selector:
-        boolean:
-    confirm_authentication_required:
-      name: "1️⃣ Option 1 - Authentication Required"
-      default: false
-      selector:
-        boolean:
+      icon: mdi:numeric-1-circle
+      description: Configure the first notification action.
+      collapsed: true
+      input:
+        confirm_enabled:
+          name: "1️⃣ Option 1"
+          default: false
+          selector:
+            boolean:
+        confirm_text:
+          name: "1️⃣ Option 1 - Title"
+          default: "Option 1"
+          selector:
+            text:
+        confirm_option_mode:
+          name: "1️⃣ Option 1 - Mode"
+          default: ""
+          selector:
+            select:
+              mode: dropdown
+              options:
+                - label: ""
+                  value: ""
+                - label: Action(s)
+                  value: action
+                - label: "Link (🤖 Android Only)"
+                  value: uri
+        confirm_action_script:
+          name: "1️⃣ Option 1 - Callback Script"
+          default: ""
+          selector:
+            entity:
+              filter:
+                - domain: script
+        confirm_uri:
+          name: "1️⃣ Option 1 - Link"
+          default: ""
+          selector:
+            text:
+              type: url
+        confirm_icon:
+          name: "1️⃣ Option 1 - Icon"
+          default: ""
+          selector:
+            text:
+              prefix: "sfsymbols:"
+        confirm_is_destructive:
+          name: "1️⃣ Option 1 - Destructive"
+          default: false
+          selector:
+            boolean:
+        confirm_authentication_required:
+          name: "1️⃣ Option 1 - Authentication Required"
+          default: false
+          selector:
+            boolean:
 
-    dismiss_enabled:
+    option_two:
       name: "2️⃣ Option 2"
-      default: false
-      selector:
-        boolean:
-    dismiss_text:
-      name: "2️⃣ Option 2 - Title"
-      default: "Option 2"
-      selector:
-        text:
-    dismiss_option_mode:
-      name: "2️⃣ Option 2 - Mode"
-      default: ""
-      selector:
-        select:
-          mode: dropdown
-          options:
-            - label: ""
-              value: ""
-            - label: Action(s)
-              value: action
-            - label: "Link (🤖 Android Only)"
-              value: uri
-    dismiss_action_script:
-      name: "2️⃣ Option 2 - Callback Script"
-      default: ""
-      selector:
-        entity:
-          filter:
-            - domain: script
-    dismiss_uri:
-      name: "2️⃣ Option 2 - Link"
-      default: ""
-      selector:
-        text:
-          type: url
-    dismiss_icon:
-      name: "2️⃣ Option 2 - Icon"
-      default: ""
-      selector:
-        text:
-          prefix: "sfsymbols:"
-    dismiss_is_destructive:
-      name: "2️⃣ Option 2 - Destructive"
-      default: false
-      selector:
-        boolean:
-    dismiss_authentication_required:
-      name: "2️⃣ Option 2 - Authentication Required"
-      default: false
-      selector:
-        boolean:
+      icon: mdi:numeric-2-circle
+      description: Configure the second notification action.
+      collapsed: true
+      input:
+        dismiss_enabled:
+          name: "2️⃣ Option 2"
+          default: false
+          selector:
+            boolean:
+        dismiss_text:
+          name: "2️⃣ Option 2 - Title"
+          default: "Option 2"
+          selector:
+            text:
+        dismiss_option_mode:
+          name: "2️⃣ Option 2 - Mode"
+          default: ""
+          selector:
+            select:
+              mode: dropdown
+              options:
+                - label: ""
+                  value: ""
+                - label: Action(s)
+                  value: action
+                - label: "Link (🤖 Android Only)"
+                  value: uri
+        dismiss_action_script:
+          name: "2️⃣ Option 2 - Callback Script"
+          default: ""
+          selector:
+            entity:
+              filter:
+                - domain: script
+        dismiss_uri:
+          name: "2️⃣ Option 2 - Link"
+          default: ""
+          selector:
+            text:
+              type: url
+        dismiss_icon:
+          name: "2️⃣ Option 2 - Icon"
+          default: ""
+          selector:
+            text:
+              prefix: "sfsymbols:"
+        dismiss_is_destructive:
+          name: "2️⃣ Option 2 - Destructive"
+          default: false
+          selector:
+            boolean:
+        dismiss_authentication_required:
+          name: "2️⃣ Option 2 - Authentication Required"
+          default: false
+          selector:
+            boolean:
 
-    option_three_enabled:
+    option_three:
       name: "3️⃣ Option 3"
-      default: false
-      selector:
-        boolean:
-    option_three_text:
-      name: "3️⃣ Option 3 - Title"
-      default: "Option 3"
-      selector:
-        text:
-    option_three_option_mode:
-      name: "3️⃣ Option 3 - Mode"
-      default: ""
-      selector:
-        select:
-          mode: dropdown
-          options:
-            - label: ""
-              value: ""
-            - label: Action(s)
-              value: action
-            - label: "Link (🤖 Android Only)"
-              value: uri
-    option_three_action_script:
-      name: "3️⃣ Option 3 - Callback Script"
-      default: ""
-      selector:
-        entity:
-          filter:
-            - domain: script
-    option_three_uri:
-      name: "3️⃣ Option 3 - Link"
-      default: ""
-      selector:
-        text:
-          type: url
-    option_three_icon:
-      name: "3️⃣ Option 3 - Icon"
-      default: ""
-      selector:
-        text:
-          prefix: "sfsymbols:"
-    option_three_is_destructive:
-      name: "3️⃣ Option 3 - Destructive"
-      default: false
-      selector:
-        boolean:
-    option_three_authentication_required:
-      name: "3️⃣ Option 3 - Authentication Required"
-      default: false
-      selector:
-        boolean:
+      icon: mdi:numeric-3-circle
+      description: Configure the third notification action.
+      collapsed: true
+      input:
+        option_three_enabled:
+          name: "3️⃣ Option 3"
+          default: false
+          selector:
+            boolean:
+        option_three_text:
+          name: "3️⃣ Option 3 - Title"
+          default: "Option 3"
+          selector:
+            text:
+        option_three_option_mode:
+          name: "3️⃣ Option 3 - Mode"
+          default: ""
+          selector:
+            select:
+              mode: dropdown
+              options:
+                - label: ""
+                  value: ""
+                - label: Action(s)
+                  value: action
+                - label: "Link (🤖 Android Only)"
+                  value: uri
+        option_three_action_script:
+          name: "3️⃣ Option 3 - Callback Script"
+          default: ""
+          selector:
+            entity:
+              filter:
+                - domain: script
+        option_three_uri:
+          name: "3️⃣ Option 3 - Link"
+          default: ""
+          selector:
+            text:
+              type: url
+        option_three_icon:
+          name: "3️⃣ Option 3 - Icon"
+          default: ""
+          selector:
+            text:
+              prefix: "sfsymbols:"
+        option_three_is_destructive:
+          name: "3️⃣ Option 3 - Destructive"
+          default: false
+          selector:
+            boolean:
+        option_three_authentication_required:
+          name: "3️⃣ Option 3 - Authentication Required"
+          default: false
+          selector:
+            boolean:
 
     enable_timeout:
       name: "⌛️ Enable Timeout"
