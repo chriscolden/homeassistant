@@ -15,8 +15,7 @@ fields:
   field_notify_device:
     name: "📲 Device to notify"
     description: "Device needs to run the official Home Assistant Companion app to receive notifications."
-    required: false
-    default: ""
+    required: true
     selector:
       device:
         filter:
